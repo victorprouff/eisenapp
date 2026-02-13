@@ -29,6 +29,9 @@ function setupEventListeners() {
     zone.addEventListener('drop', handleDrop);
     zone.addEventListener('dragleave', handleDragLeave);
   });
+
+  // Supprimer toutes les tâches
+  document.getElementById('clearTasks').addEventListener('click', removeAllTasks);
 }
 
 // Ajouter une nouvelle tâche
@@ -67,11 +70,18 @@ function toggleTaskComplete(id) {
 }
 
 function removeAllTasks() {
-  if (confirm('Êtes-vous sûr de vouloir supprimer toutes les tâches ?')) {
+  const modal = document.getElementById('confirmModal');
+  modal.classList.add('visible');
+
+  document.getElementById('confirmYes').onclick = () => {
+    modal.classList.remove('visible');
     tasks = [];
     saveTasks();
     render();
-  }
+  };
+  document.getElementById('confirmNo').onclick = () => {
+    modal.classList.remove('visible');
+  };
 }
 
 function createTaskElement(task, isDraggable = true) {
@@ -175,7 +185,8 @@ function handleDrop(e) {
 
   if (draggedTask) {
     const taskId = draggedTask.dataset.taskId;
-    const quadrantNumber = parseInt(e.target.dataset.dropZone);
+    const dropZone = e.target.closest('[data-drop-zone]');
+    const quadrantNumber = dropZone ? parseInt(dropZone.dataset.dropZone) : NaN;
 
     // Mettre à jour la tâche
     const task = tasks.find(t => t.id === taskId);

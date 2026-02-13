@@ -9,7 +9,7 @@
 <body>
   <div class="titlebar">
     <span class="titlebar-text">Matrice d'Eisenhower</span>
-    <button class="clear-tasks" id="clearTasks" title="Supprimer toutes les tâches" onclick="removeAllTasks()">🗑️</button>
+    <button class="clear-tasks" id="clearTasks" title="Supprimer toutes les tâches">🗑️</button>
     <button class="theme-toggle" id="themeToggle" title="Changer de thème">
       <span class="theme-icon">🌙</span>
     </button>
@@ -113,6 +113,16 @@
         </div>
       </div>
     </aside>
+  </div>
+
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <p>Êtes-vous sûr de vouloir supprimer toutes les tâches ?</p>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" id="confirmNo">Annuler</button>
+        <button class="modal-btn modal-btn-confirm" id="confirmYes">Supprimer</button>
+      </div>
+    </div>
   </div>
 
   <script src="renderer.js"></script>
