@@ -9,6 +9,9 @@
 <body>
   <div class="titlebar">
     <span class="titlebar-text">Matrice d'Eisenhower</span>
+    <button class="update-check" id="updateBtn" title="Vérifier les mises à jour" style="display:none">
+      🔄<span class="update-badge" id="updateBadge" style="display:none"></span>
+    </button>
     <button class="clear-tasks" id="clearTasks" title="Supprimer toutes les tâches">🗑️</button>
     <button class="theme-toggle" id="themeToggle" title="Changer de thème">
       <span class="theme-icon">🌙</span>
@@ -121,6 +124,22 @@
       <div class="modal-buttons">
         <button class="modal-btn modal-btn-cancel" id="confirmNo">Annuler</button>
         <button class="modal-btn modal-btn-confirm" id="confirmYes">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="updateModal">
+    <div class="modal">
+      <h3 id="updateModalTitle" style="margin-bottom:12px;font-size:16px;">Mise à jour disponible</h3>
+      <p id="updateModalVersion" style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;"></p>
+      <div class="update-notes" id="updateModalNotes"></div>
+      <div class="progress-bar" id="updateProgress" style="display:none">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p id="progressText" style="display:none;font-size:12px;text-align:center;color:var(--text-secondary);margin-top:6px;"></p>
+      <div class="modal-buttons" id="updateModalButtons">
+        <button class="modal-btn modal-btn-cancel" id="updateModalClose">Plus tard</button>
+        <button class="modal-btn modal-btn-confirm" id="updateModalInstall">Installer</button>
       </div>
     </div>
   </div>
