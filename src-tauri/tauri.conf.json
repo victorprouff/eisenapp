@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicegui/nicegui/main/nicegui/tauri/tauri-conf-schema.json",
   "productName": "Eisenhower Tasks",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "identifier": "com.eisenhower.tasks-rust",
   "build": {
     "frontendDist": "../src"
@@ -34,7 +34,7 @@
   },
   "plugins": {
     "updater": {
-      "pubkey": "REMPLACER_PAR_LA_CLE_PUBLIQUE",
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlBRDEyMENGOTcyQ0NBRDcKUldUWHlpeVh6eURSbWxxdWppOXM1T1JkWEtTa0lKWmpoaUQ3RE4xc05iaVBwOTc0TW9mdjcxSUgK",
       "endpoints": [
         "https://github.com/victorprouff/eisenhower-tasks-rust/releases/latest/download/latest.json"
       ],
