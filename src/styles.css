@@ -779,20 +779,14 @@ body.dark-theme .theme-toggle:hover {
   font-size: 13px;
   color: var(--text-secondary);
 }
-.lang-switcher { display: flex; gap: 6px; }
-.lang-btn {
-  padding: 3px 10px;
+#langSelect {
+  padding: 3px 6px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  cursor: pointer;
   font-size: 12px;
-  background: transparent;
-  color: var(--text-secondary);
-}
-.lang-btn.active {
-  background: #007aff;
-  color: #fff;
-  border-color: #007aff;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .settings-modal-buttons {

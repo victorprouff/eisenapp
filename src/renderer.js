@@ -96,9 +96,7 @@ function setupEventListeners() {
   });
 
   // Sélecteur de langue
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => setLang(btn.dataset.lang));
-  });
+  document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
 
   // Settings
   document.getElementById('settingsBtn').addEventListener('click', () => {

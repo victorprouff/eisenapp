@@ -176,10 +176,191 @@ const translations = {
     // Tooltip édition
     task_edit_tooltip: 'Double-click to edit',
   },
+
+  es: {
+    // Titlebar
+    btn_settings_title: 'Configuración',
+    btn_clear_title: 'Eliminar todas las tareas',
+    btn_theme_title: 'Cambiar tema',
+    update_banner: 'Actualización disponible',
+
+    // Sidebar gauche
+    new_task: 'Nueva tarea',
+    task_placeholder: 'Escribe una tarea...',
+    btn_add: 'Añadir',
+    btn_import: 'Importar lista',
+    unassigned_tasks: 'Tareas sin asignar',
+
+    // États vides
+    empty_unassigned: 'Sin tareas pendientes',
+    empty_quadrant: 'Arrastra una tarea aquí',
+    empty_priority: 'Sin tareas',
+
+    // Sidebar droite
+    priority_list: 'Lista priorizada',
+    btn_export: 'Exportar',
+
+    // Quadrant labels (fixes)
+    q1_label: 'Urgente & Importante',
+    q2_label: 'Importante & No urgente',
+    q3_label: 'Urgente & No importante',
+    q4_label: 'No urgente & No importante',
+
+    // Noms par défaut des quadrants (réinitialisables)
+    q1_default: 'Hacer inmediatamente',
+    q2_default: 'Planificar',
+    q3_default: 'Delegar - Cancelar si no hay tiempo',
+    q4_default: 'Hacer si hay tiempo e interés',
+
+    // Priorité droite
+    priority_q1: 'Hacer ahora',
+    priority_q2: 'Planificar',
+    priority_q3: 'Delegar',
+    priority_q4: 'Elegir si hay tiempo',
+
+    // File drop overlay
+    file_drop_label: 'Soltar archivo aquí',
+
+    // Modale suppression
+    confirm_delete_all: '¿Seguro que quieres eliminar todas las tareas?',
+    btn_cancel: 'Cancelar',
+    btn_delete: 'Eliminar',
+
+    // Modale mise à jour
+    update_available: 'Actualización disponible',
+    update_later: 'Más tarde',
+    update_install: 'Instalar',
+    update_downloading: 'Descargando…',
+    update_downloading_pct: (pct) => `Descargando… ${pct}%`,
+    update_downloading_kb: (kb) => `Descargando… ${kb} KB`,
+    update_installing: 'Instalando…',
+    update_error: 'Error: ',
+
+    // Modale export
+    export_title: 'Exportar lista',
+    btn_export_cancel: 'Cancelar',
+    btn_export_clipboard: 'Copiar al portapapeles',
+    btn_export_download: 'Descargar .md',
+    export_unsorted: 'Sin clasificar',
+    export_q1: 'Hacer inmediatamente',
+    export_q2: 'Planificar',
+    export_q3: 'Hacer si hay tiempo',
+    export_q4: 'Hacer si hay tiempo e interés',
+
+    // Modale settings
+    settings_title: 'Configuración de cuadrantes',
+    settings_q1_label: 'Cuadrante 1 — Urgente & Importante',
+    settings_q2_label: 'Cuadrante 2 — Importante & No urgente',
+    settings_q3_label: 'Cuadrante 3 — Urgente & No importante',
+    settings_q4_label: 'Cuadrante 4 — No urgente & No importante',
+    btn_reset: 'Restablecer',
+    btn_save: 'Guardar',
+    language_label: 'Idioma',
+
+    // Toasts
+    toast_file_saved: '¡Archivo guardado!',
+    toast_task_deleted: 'Tarea eliminada',
+    toast_undo: 'Deshacer',
+
+    // Tooltip édition
+    task_edit_tooltip: 'Doble clic para editar',
+  },
+
+  de: {
+    // Titlebar
+    btn_settings_title: 'Einstellungen',
+    btn_clear_title: 'Alle Aufgaben löschen',
+    btn_theme_title: 'Design wechseln',
+    update_banner: 'Update verfügbar',
+
+    // Sidebar gauche
+    new_task: 'Neue Aufgabe',
+    task_placeholder: 'Aufgabe eingeben...',
+    btn_add: 'Hinzufügen',
+    btn_import: 'Liste importieren',
+    unassigned_tasks: 'Nicht zugewiesene Aufgaben',
+
+    // États vides
+    empty_unassigned: 'Keine ausstehenden Aufgaben',
+    empty_quadrant: 'Aufgabe hierher ziehen',
+    empty_priority: 'Keine Aufgaben',
+
+    // Sidebar droite
+    priority_list: 'Prioritätsliste',
+    btn_export: 'Exportieren',
+
+    // Quadrant labels (fixes)
+    q1_label: 'Dringend & Wichtig',
+    q2_label: 'Wichtig & Nicht dringend',
+    q3_label: 'Dringend & Nicht wichtig',
+    q4_label: 'Nicht dringend & Nicht wichtig',
+
+    // Noms par défaut des quadrants (réinitialisables)
+    q1_default: 'Sofort erledigen',
+    q2_default: 'Planen',
+    q3_default: 'Delegieren - Abbrechen wenn keine Zeit',
+    q4_default: 'Erledigen wenn Zeit und Lust',
+
+    // Priorité droite
+    priority_q1: 'Jetzt erledigen',
+    priority_q2: 'Planen',
+    priority_q3: 'Delegieren',
+    priority_q4: 'Bei Gelegenheit',
+
+    // File drop overlay
+    file_drop_label: 'Datei hier ablegen',
+
+    // Modale suppression
+    confirm_delete_all: 'Alle Aufgaben wirklich löschen?',
+    btn_cancel: 'Abbrechen',
+    btn_delete: 'Löschen',
+
+    // Modale mise à jour
+    update_available: 'Update verfügbar',
+    update_later: 'Später',
+    update_install: 'Installieren',
+    update_downloading: 'Wird heruntergeladen…',
+    update_downloading_pct: (pct) => `Herunterladen… ${pct}%`,
+    update_downloading_kb: (kb) => `Herunterladen… ${kb} KB`,
+    update_installing: 'Wird installiert…',
+    update_error: 'Fehler: ',
+
+    // Modale export
+    export_title: 'Liste exportieren',
+    btn_export_cancel: 'Abbrechen',
+    btn_export_clipboard: 'In Zwischenablage kopieren',
+    btn_export_download: '.md herunterladen',
+    export_unsorted: 'Unsortiert',
+    export_q1: 'Sofort erledigen',
+    export_q2: 'Planen',
+    export_q3: 'Erledigen wenn Zeit',
+    export_q4: 'Erledigen wenn Zeit und Lust',
+
+    // Modale settings
+    settings_title: 'Quadranteneinstellungen',
+    settings_q1_label: 'Quadrant 1 — Dringend & Wichtig',
+    settings_q2_label: 'Quadrant 2 — Wichtig & Nicht dringend',
+    settings_q3_label: 'Quadrant 3 — Dringend & Nicht wichtig',
+    settings_q4_label: 'Quadrant 4 — Nicht dringend & Nicht wichtig',
+    btn_reset: 'Zurücksetzen',
+    btn_save: 'Speichern',
+    language_label: 'Sprache',
+
+    // Toasts
+    toast_file_saved: 'Datei gespeichert!',
+    toast_task_deleted: 'Aufgabe gelöscht',
+    toast_undo: 'Rückgängig',
+
+    // Tooltip édition
+    task_edit_tooltip: 'Doppelklick zum Bearbeiten',
+  },
 };
 
+const SUPPORTED_LANGS = ['fr', 'en', 'es', 'de'];
+
 let currentLang = localStorage.getItem('eisen-lang')
-  || (navigator.language.startsWith('fr') ? 'fr' : 'en');
+  || SUPPORTED_LANGS.find(l => navigator.language.startsWith(l))
+  || 'en';
 
 function t(key, ...args) {
   const val = translations[currentLang]?.[key] ?? translations['fr'][key] ?? key;
@@ -198,9 +379,8 @@ function applyTranslations() {
   });
   document.documentElement.lang = currentLang;
 
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === currentLang);
-  });
+  const sel = document.getElementById('langSelect');
+  if (sel) sel.value = currentLang;
 }
 
 function setLang(lang) {

@@ -172,10 +172,12 @@
       <h3 style="margin-bottom:20px;font-size:16px;" data-i18n="settings_title">Paramètres des quadrants</h3>
       <div class="settings-lang">
         <span data-i18n="language_label">Langue</span>
-        <div class="lang-switcher">
-          <button class="lang-btn" data-lang="fr">FR</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-        </div>
+        <select id="langSelect">
+          <option value="fr">Français</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="de">Deutsch</option>
+        </select>
       </div>
       <div class="settings-fields">
         <label><span data-i18n="settings_q1_label">Quadrant 1 — Urgent &amp; Important</span><input type="text" id="qName1"></label>
