@@ -36,9 +36,11 @@
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDlBRDEyMENGOTcyQ0NBRDcKUldUWHlpeVh6eURSbWxxdWppOXM1T1JkWEtTa0lKWmpoaUQ3RE4xc05iaVBwOTc0TW9mdjcxSUgK",
       "endpoints": [
-        "https://github.com/victorprouff/eisenhower-tasks-rust/releases/latest/download/latest.json"
+        "https://github.com/victorprouff/eisenapp/releases/latest/download/latest.json"
       ],
-      "windows": { "installMode": "passive" }
+      "windows": {
+        "installMode": "passive"
+      }
     }
   }
 }

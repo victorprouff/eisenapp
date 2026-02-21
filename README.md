@@ -21,18 +21,12 @@ Portage de la version Electron vers Tauri pour un binaire plus léger et perform
 
 ## TODO :
 
-- [x] **Mises à jour automatiques** : vérification au démarrage + bouton 🔄 dans la barre de titre
-- [x] **Édition inline** : double-cliquer sur une tâche pour modifier son texte (Entrée pour valider, Échap pour annuler)
-- [x] **Import de tâches** : bouton "Importer une liste", drag & drop fichier, ou coller une liste multiligne
-- [x] **Export markdown** : bouton "Exporter" en bas de la liste priorisée (copie presse-papier ou téléchargement avec dialog natif)
-- [ ] Le bouton de suppression des tâches doit être toujours au même endroit en haut à droite de la tâche peu importe la taille de la tâche
-- Le bouton d'export est grisé tant qu'il n'y a pas de tâche
+- Créer un change log dans github
 - Pouvoir rajouter une date et une heure au tâche. Valeur modifiable
 - Pouvoir rajouter une durée
-- Changer le visuel du bouton mise à jour pour qu'il soit plus beau
-- Faire disparaître le bouton de mise à jour s'il n'y a pas de mise à jour
-- Renommer l'application en 'EisenApp'
-- 
+- Rajouter settings pour modifier couleurs de l'interface
+- Depuis les settings pouvoir personnaliser les différents titres des catégories
+- Gérer le multilingue
 
 ## Architecture
 
@@ -77,13 +71,14 @@ npm run tauri:build
 ```
 
 Les bundles sont générés dans `src-tauri/target/release/bundle/` :
+
 - **macOS** : `.app` + `.dmg`
 - **Windows** : NSIS installer
 - **Linux** : AppImage + `.deb`
 
 ## Télécharger
 
-Les releases sont disponibles sur la [page GitHub Releases](https://github.com/victorprouff/eisenhower-tasks-rust/releases). L'application se met à jour automatiquement dès qu'une nouvelle version est publiée.
+Les releases sont disponibles sur la [page GitHub Releases](https://github.com/victorprouff/eisenapp/releases). L'application se met à jour automatiquement dès qu'une nouvelle version est publiée.
 
 ### macOS — premier lancement
 
@@ -102,16 +97,17 @@ xattr -cr "/Applications/Eisenhower Tasks.app"
 ## Publier une nouvelle version
 
 1. Mettre à jour la version dans `src-tauri/tauri.conf.json` :
-   ```json
-   "version": "1.x.0",
-   ```
+
+    ```json
+    "version": "1.x.0",
+    ```
 
 2. Commiter, tagger et pousser :
-   ```bash
-   git add src-tauri/tauri.conf.json
-   git commit -m "chore: bump version to 1.x.0"
-   git tag v1.x.0
-   git push origin main && git push origin v1.x.0
-   ```
+    ```bash
+    git add src-tauri/tauri.conf.json
+    git commit -m "chore: bump version to 1.x.0"
+    git tag v1.x.0
+    git push origin main && git push origin v1.x.0
+    ```
 
 Le workflow GitHub Actions build automatiquement pour macOS (arm64 + x64), Windows et Linux, puis publie la release.
