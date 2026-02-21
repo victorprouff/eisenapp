@@ -283,6 +283,67 @@ body.dark-theme {
   color: var(--q1-color);
 }
 
+/* Badge flag pro/perso */
+.task-flag {
+  padding: 2px 7px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  cursor: pointer;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+.task-flag svg {
+  display: block;
+}
+.task-flag.flag-pro {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+.task-flag.flag-perso {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: #f9a8d4;
+}
+.task-flag.flag-pro {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+.task-flag.flag-perso {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: #f9a8d4;
+}
+
+/* Barre de filtres pro/perso (dans la titlebar) */
+.filter-bar {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  right: 110px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.filter-btn {
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+}
+.filter-btn.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
 /* Code couleur par quadrant */
 .task-item.q1 { border-left-color: var(--q1-color); }
 .task-item.q2 { border-left-color: var(--q2-color); }

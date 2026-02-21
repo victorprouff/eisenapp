@@ -12,6 +12,9 @@ function getDefaultQuadrantColors() {
 let quadrantNames = null;
 let quadrantColors = null;
 let _savedColors = null; // snapshot à l'ouverture de la modale
+let activeFilter = 'all'; // 'all' | 'pro' | 'perso'
+
+const EMPTY_FLAG_ICON = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 1.5h7l-2.5 4 2.5 5H2V1.5z"/></svg>`;
 
 const PRESET_COLORS = [
   '#dc2626', '#e11d48', '#db2777', '#7c3aed',
@@ -174,6 +177,16 @@ function setupEventListeners() {
     }
   });
 
+  // Boutons filtre pro/perso
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeFilter = btn.dataset.filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render();
+    });
+  });
+
   // Paste multiligne
   document.addEventListener('paste', (e) => {
     if (e.target.classList.contains('task-edit-input')) return;
@@ -190,11 +203,11 @@ function setupEventListeners() {
 // Génère le contenu markdown de l'export
 function generateExportContent() {
   const sections = [
-    { label: t('export_unsorted'), tasks: tasks.filter(t => !t.quadrant) },
-    { label: t('export_q1'),       tasks: tasks.filter(t => t.quadrant === 1) },
-    { label: t('export_q2'),       tasks: tasks.filter(t => t.quadrant === 2) },
-    { label: t('export_q3'),       tasks: tasks.filter(t => t.quadrant === 3) },
-    { label: t('export_q4'),       tasks: tasks.filter(t => t.quadrant === 4) },
+    { label: t('export_unsorted'), tasks: filterByFlag(tasks.filter(t => !t.quadrant)) },
+    { label: t('export_q1'),       tasks: filterByFlag(tasks.filter(t => t.quadrant === 1)) },
+    { label: t('export_q2'),       tasks: filterByFlag(tasks.filter(t => t.quadrant === 2)) },
+    { label: t('export_q3'),       tasks: filterByFlag(tasks.filter(t => t.quadrant === 3)) },
+    { label: t('export_q4'),       tasks: filterByFlag(tasks.filter(t => t.quadrant === 4)) },
   ];
 
   return sections
@@ -412,6 +425,18 @@ function createTaskElement(task, isDraggable = true) {
     input.addEventListener('blur', commit);
   });
 
+  const flagBtn = document.createElement('button');
+  flagBtn.className = 'task-flag' + (task.flag ? ` flag-${task.flag}` : '');
+  flagBtn.title = t('task_flag_tooltip');
+  flagBtn.innerHTML = task.flag ? t(`flag_${task.flag}`) : EMPTY_FLAG_ICON;
+  flagBtn.onclick = (e) => {
+    e.stopPropagation();
+    const next = task.flag === null || task.flag === undefined ? 'pro' : task.flag === 'pro' ? 'perso' : null;
+    task.flag = next;
+    saveTasks();
+    render();
+  };
+
   const deleteBtn = document.createElement('button');
   deleteBtn.className = 'task-delete';
   deleteBtn.innerHTML = '×';
@@ -422,6 +447,7 @@ function createTaskElement(task, isDraggable = true) {
 
   taskEl.appendChild(checkbox);
   taskEl.appendChild(textSpan);
+  taskEl.appendChild(flagBtn);
   taskEl.appendChild(deleteBtn);
 
   return taskEl;
@@ -492,6 +518,12 @@ function handleDrop(e) {
   return false;
 }
 
+// Filtre les tâches selon le flag actif
+function filterByFlag(taskList) {
+  if (activeFilter === 'all') return taskList;
+  return taskList.filter(t => t.flag === activeFilter);
+}
+
 // Rendu de l'interface
 function render() {
   // Vider tous les conteneurs
@@ -504,8 +536,8 @@ function render() {
   }
 
   // Afficher les tâches non assignées
-  const unassignedTasks = tasks
-    .filter(t => !t.quadrant)
+  const unassignedTasks = filterByFlag(tasks
+    .filter(t => !t.quadrant))
     .sort((a, b) => a.completed - b.completed);
 
   if (unassignedTasks.length === 0) {
@@ -518,7 +550,7 @@ function render() {
 
   // Afficher les tâches dans les quadrants
   for (let i = 1; i <= 4; i++) {
-    const quadrantTasks = tasks.filter(t => t.quadrant === i)
+    const quadrantTasks = filterByFlag(tasks.filter(t => t.quadrant === i))
           .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
 
     const zone = document.querySelector(`[data-drop-zone="${i}"]`);
@@ -540,7 +572,7 @@ function render() {
 function renderPriorityList() {
   for (let i = 1; i <= 4; i++) {
     const priorityContainer = document.getElementById(`priority-${i}`);
-    const quadrantTasks = tasks.filter(t => t.quadrant === i)
+    const quadrantTasks = filterByFlag(tasks.filter(t => t.quadrant === i))
           .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
 
     if (quadrantTasks.length === 0) {

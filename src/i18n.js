@@ -88,6 +88,14 @@ const translations = {
 
     // Tooltip édition
     task_edit_tooltip: 'Double-cliquer pour modifier',
+
+    // Filtre pro/perso
+    filter_all: 'Tous',
+    filter_pro: 'Pro',
+    filter_perso: 'Perso',
+    flag_pro: 'Pro',
+    flag_perso: 'Perso',
+    task_flag_tooltip: 'Changer le flag',
   },
 
   en: {
@@ -179,6 +187,14 @@ const translations = {
 
     // Tooltip édition
     task_edit_tooltip: 'Double-click to edit',
+
+    // Filtre pro/perso
+    filter_all: 'All',
+    filter_pro: 'Pro',
+    filter_perso: 'Personal',
+    flag_pro: 'Pro',
+    flag_perso: 'Personal',
+    task_flag_tooltip: 'Change flag',
   },
 
   es: {
@@ -270,6 +286,14 @@ const translations = {
 
     // Tooltip édition
     task_edit_tooltip: 'Doble clic para editar',
+
+    // Filtre pro/perso
+    filter_all: 'Todo',
+    filter_pro: 'Pro',
+    filter_perso: 'Personal',
+    flag_pro: 'Pro',
+    flag_perso: 'Personal',
+    task_flag_tooltip: 'Cambiar etiqueta',
   },
 
   de: {
@@ -361,6 +385,14 @@ const translations = {
 
     // Tooltip édition
     task_edit_tooltip: 'Doppelklick zum Bearbeiten',
+
+    // Filtre pro/perso
+    filter_all: 'Alle',
+    filter_pro: 'Pro',
+    filter_perso: 'Privat',
+    flag_pro: 'Pro',
+    flag_perso: 'Privat',
+    task_flag_tooltip: 'Kennzeichen ändern',
   },
 };
 

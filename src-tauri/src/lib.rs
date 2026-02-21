@@ -59,6 +59,8 @@ struct Task {
     completed: bool,
     #[serde(rename = "createdAt")]
     created_at: String,
+    #[serde(default)]
+    flag: Option<String>, // "pro" | "perso" | null
 }
 
 #[tauri::command]
