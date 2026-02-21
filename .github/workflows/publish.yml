@@ -27,7 +27,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: '${{ steps.get-version.outputs.VERSION }}',
-              name: 'Eisenhower Tasks ${{ steps.get-version.outputs.VERSION }}',
+              name: 'EisenApp ${{ steps.get-version.outputs.VERSION }}',
               body: 'See the changelog for details.',
               draft: true,
               prerelease: false,

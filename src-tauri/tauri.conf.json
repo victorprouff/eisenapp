@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/nicegui/nicegui/main/nicegui/tauri/tauri-conf-schema.json",
-  "productName": "Eisenhower Tasks",
+  "productName": "EisenApp",
   "version": "1.6.0",
   "identifier": "com.eisenhower.tasks-rust",
   "build": {
@@ -10,7 +10,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "Matrice d'Eisenhower",
+        "title": "EisenApp",
         "width": 1400,
         "height": 900,
         "minWidth": 1000,

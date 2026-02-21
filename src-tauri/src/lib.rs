@@ -47,7 +47,7 @@ async fn save_markdown(content: String) -> Result<bool, String> {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
         let file = rfd::AsyncFileDialog::new()
-            .set_file_name("eisenhower-tasks.md")
+            .set_file_name("eisenapp-tasks.md")
             .add_filter("Markdown", &["md"])
             .save_file()
             .await;

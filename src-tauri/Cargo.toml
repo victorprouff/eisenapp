@@ -1,10 +1,10 @@
 [package]
-name = "eisenhower-tasks-rust"
+name = "eisenapp"
 version = "1.0.0"
 edition = "2021"
 
 [lib]
-name = "eisenhower_tasks_rust_lib"
+name = "eisenapp_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
