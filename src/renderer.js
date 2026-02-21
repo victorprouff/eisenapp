@@ -509,8 +509,7 @@ themeToggle.addEventListener('click', () => {
 });
 
 // ─── Gestion des mises à jour ────────────────────────────────────────────────
-const updateBtn = document.getElementById('updateBtn');
-const updateBadge = document.getElementById('updateBadge');
+const updateBanner = document.getElementById('updateBanner');
 const updateModal = document.getElementById('updateModal');
 const updateModalTitle = document.getElementById('updateModalTitle');
 const updateModalVersion = document.getElementById('updateModalVersion');
@@ -522,34 +521,38 @@ const updateModalButtons = document.getElementById('updateModalButtons');
 const updateModalClose = document.getElementById('updateModalClose');
 const updateModalInstall = document.getElementById('updateModalInstall');
 
-function showUpdateModal(info) {
+let pendingUpdateInfo = null;
+
+function showUpdateModal() {
   updateModalTitle.textContent = 'Mise à jour disponible';
-  updateModalVersion.textContent = info.version ? `Version ${info.version}` : '';
-  updateModalNotes.textContent = info.notes || '';
+  updateModalVersion.textContent = pendingUpdateInfo.version ? `Version ${pendingUpdateInfo.version}` : '';
+  updateModalNotes.textContent = pendingUpdateInfo.notes || '';
   updateProgress.style.display = 'none';
   progressText.style.display = 'none';
   progressFill.style.width = '0%';
   updateModalButtons.style.display = 'flex';
+  updateModalInstall.style.display = '';
   updateModal.classList.add('visible');
+}
+
+function signalUpdateAvailable(info) {
+  pendingUpdateInfo = info;
+  updateBanner.style.display = 'block';
 }
 
 // Écouter la détection automatique au démarrage
 if (window.__TAURI__) {
   window.__TAURI__.event.listen('update-available', (event) => {
-    updateBadge.style.display = 'block';
-    updateBtn._pendingInfo = event.payload;
+    signalUpdateAvailable(event.payload);
   });
 
   // Vérification de secours : si l'événement Rust est émis avant le listener,
   // on revérifie après un court délai
   setTimeout(async () => {
-    if (!updateBtn._pendingInfo) {
+    if (!pendingUpdateInfo) {
       try {
         const info = await window.__TAURI__.core.invoke('check_for_updates');
-        if (info.available) {
-          updateBadge.style.display = 'block';
-          updateBtn._pendingInfo = info;
-        }
+        if (info.available) signalUpdateAvailable(info);
       } catch (e) {
         // silencieux, c'est une vérification de fond
       }
@@ -557,37 +560,12 @@ if (window.__TAURI__) {
   }, 3000);
 }
 
-// Clic sur le bouton de mise à jour
-updateBtn.addEventListener('click', async () => {
-  if (updateBtn._pendingInfo) {
-    showUpdateModal(updateBtn._pendingInfo);
-    return;
-  }
-  try {
-    const info = await window.__TAURI__.core.invoke('check_for_updates');
-    if (info.available) {
-      updateBtn._pendingInfo = info;
-      updateBadge.style.display = 'block';
-      showUpdateModal(info);
-    } else {
-      updateModalTitle.textContent = "L'application est à jour";
-      updateModalVersion.textContent = '';
-      updateModalNotes.textContent = '';
-      updateProgress.style.display = 'none';
-      progressText.style.display = 'none';
-      updateModalButtons.style.display = 'flex';
-      updateModalInstall.style.display = 'none';
-      updateModal.classList.add('visible');
-    }
-  } catch (e) {
-    console.error('Erreur vérification mise à jour:', e);
-  }
-});
+// Clic sur le bandeau
+updateBanner.addEventListener('click', showUpdateModal);
 
 // Fermer la modale
 updateModalClose.addEventListener('click', () => {
   updateModal.classList.remove('visible');
-  updateModalInstall.style.display = '';
 });
 
 // Installer la mise à jour

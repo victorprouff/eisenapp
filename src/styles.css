@@ -558,33 +558,23 @@ body.dark-theme .theme-toggle:hover {
   background: #b91c1c;
 }
 
-/* Bouton de mise à jour */
-.update-check {
+/* Bandeau de mise à jour */
+.update-banner {
   -webkit-app-region: no-drag;
   position: absolute;
-  right: 100px;
-  background: none;
-  border: none;
+  left: 90px;
+  background: #34c759;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 10px;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 6px;
   transition: background 0.2s;
-  font-size: 18px;
-  position: relative;
 }
 
-.update-check:hover {
-  background: var(--task-hover);
-}
-
-.update-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 8px;
-  height: 8px;
-  background: #007aff;
-  border-radius: 50%;
+.update-banner:hover {
+  background: #2da84a;
 }
 
 /* Notes de mise à jour */
