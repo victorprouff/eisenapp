@@ -601,6 +601,52 @@ body.dark-theme .theme-toggle:hover {
   text-align: left;
 }
 
+/* Bouton import */
+#importBtn {
+  width: 100%;
+  padding: 10px;
+  background: var(--task-bg);
+  color: var(--text-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 8px;
+}
+#importBtn:hover {
+  border-color: #007aff;
+  color: #007aff;
+  background: var(--input-bg);
+}
+
+/* Overlay drop de fichier */
+.file-drop-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 122, 255, 0.08);
+  border: 3px dashed #007aff;
+  border-radius: 12px;
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.file-drop-overlay.visible {
+  display: flex;
+}
+.file-drop-overlay-label {
+  font-size: 22px;
+  font-weight: 600;
+  color: #007aff;
+  background: var(--bg-secondary);
+  padding: 16px 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
 /* Barre de progression */
 .progress-bar {
   width: 100%;

@@ -31,6 +31,8 @@
           autocomplete="off"
         >
         <button id="addTaskBtn">Ajouter</button>
+        <input type="file" id="importFileInput" accept=".txt,.md" style="display:none">
+        <button id="importBtn">Importer une liste</button>
       </div>
       <div class="unassigned-tasks">
         <h3>Tâches non assignées</h3>
@@ -116,6 +118,10 @@
         </div>
       </div>
     </aside>
+  </div>
+
+  <div class="file-drop-overlay" id="fileDropOverlay">
+    <span class="file-drop-overlay-label">Déposer le fichier ici</span>
   </div>
 
   <div class="modal-overlay" id="confirmModal">

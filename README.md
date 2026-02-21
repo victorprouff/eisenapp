@@ -16,11 +16,14 @@ Portage de la version Electron vers Tauri pour un binaire plus léger et perform
 - **Persistance** : sauvegarde JSON sur disque (app data dir)
 - **Mises à jour automatiques** : vérification au démarrage + bouton 🔄 dans la barre de titre
 - **Édition inline** : double-cliquer sur une tâche pour modifier son texte (Entrée pour valider, Échap pour annuler)
+- **Import de tâches** : importer une liste depuis un fichier `.txt`/`.md` (bouton, drag & drop sur la fenêtre, ou coller une liste multiligne). Supporte le format markdown (`- [ ]`, `- [x]`, `-`)
 
 ## TODO :
 
-- Pouvoir importer une liste de tâches (une tâche par ligne) depuis un fichier texte ou markdown ou en drag and drop ou en collant la liste. Si une ligne commence par '-' ou '- [ ]' ou '- [x]', ces caractères sont supprimés
-- Possibilité d'exporter la liste ordonnée suivant un ordre précis
+- [x] **Mises à jour automatiques** : vérification au démarrage + bouton 🔄 dans la barre de titre
+- [x] **Édition inline** : double-cliquer sur une tâche pour modifier son texte (Entrée pour valider, Échap pour annuler)
+- [x] **Import de tâches** : bouton "Importer une liste", drag & drop fichier, ou coller une liste multiligne
+- [ ] Possibilité d'exporter la liste ordonnée suivant un ordre précis
 - Le bouton d'export est grisé tant qu'il n'y a pas de tâche
 - Pouvoir rajouter une date et une heure au tâche. Valeur modifiable
 - Pouvoir rajouter une durée

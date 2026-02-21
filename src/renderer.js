@@ -1,6 +1,7 @@
 // État de l'application
 let tasks = [];
 let draggedTask = null;
+let dragCounter = 0;
 
 // Éléments DOM
 const taskInput = document.getElementById('taskInput');
@@ -32,6 +33,95 @@ function setupEventListeners() {
 
   // Supprimer toutes les tâches
   document.getElementById('clearTasks').addEventListener('click', removeAllTasks);
+
+  // Bouton import
+  document.getElementById('importBtn').addEventListener('click', () => {
+    document.getElementById('importFileInput').click();
+  });
+  document.getElementById('importFileInput').addEventListener('change', (e) => {
+    if (e.target.files[0]) handleFileImport(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // Drag & drop de fichier sur toute la fenêtre
+  const fileDropOverlay = document.getElementById('fileDropOverlay');
+  document.addEventListener('dragenter', (e) => {
+    if (e.dataTransfer.types.includes('Files')) {
+      dragCounter++;
+      fileDropOverlay.classList.add('visible');
+    }
+  });
+  document.addEventListener('dragleave', (e) => {
+    if (e.dataTransfer.types.includes('Files')) {
+      if (--dragCounter <= 0) {
+        dragCounter = 0;
+        fileDropOverlay.classList.remove('visible');
+      }
+    }
+  });
+  document.addEventListener('dragover', (e) => {
+    if (e.dataTransfer.types.includes('Files')) e.preventDefault();
+  });
+  document.addEventListener('drop', (e) => {
+    dragCounter = 0;
+    fileDropOverlay.classList.remove('visible');
+    if (e.dataTransfer.files.length > 0) {
+      e.preventDefault();
+      handleFileImport(e.dataTransfer.files[0]);
+    }
+  });
+
+  // Paste multiligne
+  document.addEventListener('paste', (e) => {
+    if (e.target.classList.contains('task-edit-input')) return;
+    const text = e.clipboardData.getData('text/plain');
+    if (!text.includes('\n')) return;
+    const lines = parseTaskLines(text);
+    if (lines.length > 0) {
+      e.preventDefault();
+      importTaskLines(lines);
+    }
+  });
+}
+
+// Parse le texte brut en [{text, completed}]
+function parseTaskLines(text) {
+  return text.split('\n')
+    .map(line => {
+      const t = line.trim();
+      if (!t || t === '-') return null;
+      if (/^-\s*\[x\]\s+/i.test(t))
+        return { text: t.replace(/^-\s*\[x\]\s+/i, '').trim(), completed: true };
+      if (/^-\s*\[\s*\]\s+/.test(t))
+        return { text: t.replace(/^-\s*\[\s*\]\s+/, '').trim(), completed: false };
+      if (/^-\s+/.test(t))
+        return { text: t.replace(/^-\s+/, '').trim(), completed: false };
+      return { text: t, completed: false };
+    })
+    .filter(item => item && item.text.length > 0);
+}
+
+// Crée et ajoute les tâches parsées
+function importTaskLines(parsedLines) {
+  parsedLines.forEach(({ text, completed }) => {
+    tasks.push({
+      id: Date.now().toString() + Math.random().toString(36).slice(2),
+      text, quadrant: null, completed,
+      createdAt: new Date().toISOString()
+    });
+  });
+  saveTasks();
+  render();
+}
+
+// Lit un File et importe ses tâches
+function handleFileImport(file) {
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const lines = parseTaskLines(ev.target.result);
+    if (lines.length > 0) importTaskLines(lines);
+  };
+  reader.readAsText(file);
 }
 
 // Ajouter une nouvelle tâche
@@ -231,6 +321,15 @@ function handleDrop(e) {
   }
 
   e.preventDefault();
+
+  if (e.dataTransfer.files.length > 0) {
+    handleFileImport(e.dataTransfer.files[0]);
+    dragCounter = 0;
+    document.getElementById('fileDropOverlay').classList.remove('visible');
+    const quadrant = e.target.closest('.quadrant');
+    if (quadrant) quadrant.classList.remove('drag-over');
+    return false;
+  }
 
   const quadrant = e.target.closest('.quadrant');
   quadrant.classList.remove('drag-over');
