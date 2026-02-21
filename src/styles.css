@@ -69,9 +69,13 @@ body.dark-theme {
 }
 
 .titlebar-text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: var(--text-primary);
+  pointer-events: none;
 }
 
 .theme-toggle {
@@ -276,17 +280,6 @@ body.dark-theme {
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.matrix-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.matrix-header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
 }
 
 .matrix {
