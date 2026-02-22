@@ -22,6 +22,7 @@ let flagColors = { Pro: '#1d4ed8', Perso: '#be185d' };
 let editingFlagColors = null;
 let newFlagColor = '#16a34a';
 let activeFilter = 'all';
+let showCompleted = true;
 
 // Dropdown flag
 let _dropdownTask = null;
@@ -662,10 +663,17 @@ function moveTask(task, direction) {
   render();
 }
 
-// Filtre les tâches selon le flag actif
-function filterByFlag(taskList) {
-  if (activeFilter === 'all') return taskList;
-  return taskList.filter(t => t.flag === activeFilter);
+// Filtre uniquement par flag actif (sans tenir compte de showCompleted)
+function filterByFlag(list) {
+  if (activeFilter === 'all') return list;
+  return list.filter(t => t.flag === activeFilter);
+}
+
+// Filtre les tâches selon le flag actif et la visibilité des terminées
+function filterTasks(list) {
+  let result = filterByFlag(list);
+  if (!showCompleted) result = result.filter(t => !t.completed);
+  return result;
 }
 
 // Rendu de l'interface
@@ -680,7 +688,7 @@ function render() {
   }
 
   // Afficher les tâches non assignées
-  const unassignedTasks = filterByFlag(tasks
+  const unassignedTasks = filterTasks(tasks
     .filter(t => !t.quadrant))
     .sort((a, b) => a.completed - b.completed);
 
@@ -694,7 +702,7 @@ function render() {
 
   // Afficher les tâches dans les quadrants
   for (let i = 1; i <= 4; i++) {
-    const quadrantTasks = filterByFlag(tasks.filter(t => t.quadrant === i))
+    const quadrantTasks = filterTasks(tasks.filter(t => t.quadrant === i))
           .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
 
     const zone = document.querySelector(`[data-drop-zone="${i}"]`);
@@ -716,7 +724,7 @@ function render() {
 function renderPriorityList() {
   for (let i = 1; i <= 4; i++) {
     const priorityContainer = document.getElementById(`priority-${i}`);
-    const quadrantTasks = filterByFlag(tasks.filter(t => t.quadrant === i))
+    const quadrantTasks = filterTasks(tasks.filter(t => t.quadrant === i))
           .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1);
 
     if (quadrantTasks.length === 0) {
@@ -815,6 +823,20 @@ function buildFilterBar() {
     });
     bar.appendChild(btn);
   });
+
+  const sep = document.createElement('span');
+  sep.className = 'filter-separator';
+  bar.appendChild(sep);
+
+  const completedBtn = document.createElement('button');
+  completedBtn.className = 'filter-btn filter-btn-completed' + (!showCompleted ? ' active' : '');
+  completedBtn.textContent = t('filter_hide_completed');
+  completedBtn.addEventListener('click', () => {
+    showCompleted = !showCompleted;
+    buildFilterBar();
+    render();
+  });
+  bar.appendChild(completedBtn);
 }
 
 // Reconstruit la liste de flags dans les settings

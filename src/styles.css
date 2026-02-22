@@ -407,6 +407,16 @@ body.dark-theme {
   color: var(--bg-primary);
   border-color: var(--text-primary);
 }
+.filter-separator {
+  width: 1px;
+  height: 14px;
+  background: var(--border-color);
+  margin: 0 2px;
+}
+.filter-btn-completed.active {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
+}
 
 /* Code couleur par quadrant */
 .task-item.q1 { border-left-color: var(--q1-color); }
