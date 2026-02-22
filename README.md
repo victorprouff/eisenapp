@@ -18,9 +18,16 @@ A task management application based on the **Eisenhower Matrix**, built with [Ta
 - **Inline editing**: double-click a task to edit its text (Enter to confirm, Escape to cancel)
 - **Task import**: import a list from a `.txt`/`.md` file (button, drag & drop onto the window, or paste a multi-line list). Supports markdown format (`- [ ]`, `- [x]`, `-`)
 - **Markdown export**: export the priority list as `.md` (clipboard copy or save with native file dialog), respects the active filter
-- **Pro/Personal flag**: tag tasks as Pro or Personal (click the badge on each task to cycle), with global filter in the title bar and export respecting the active filter
+- **Custom flags**: tag tasks with configurable flags (Pro/Personal by default) — click the badge to choose from a dropdown, filter by flag in the title bar, export respects the active filter
+  - Add and remove flags from settings (General tab), each with a custom color chosen from a palette
+  - Removing a flag clears it from all affected tasks
 - **Task ordering**: reorder non-completed tasks within each quadrant using ↑ ↓ buttons (visible on hover), order preserved in the priority list and export
+- **Display density**: Normal or Compact mode, configurable in settings
+- **Customizable settings**: tabbed panel (General / Quadrants)
+  - General: language, flag toggle, density mode
+  - Quadrants: custom names and colors per quadrant, individual reset
 - **Multilingual**: French, English, Spanish, German — auto-detected from system language, persisted across sessions
+- **Scrollable quadrants**: each quadrant scrolls independently, all four share equal height
 
 ## Architecture
 
