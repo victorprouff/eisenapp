@@ -152,6 +152,7 @@ body.dark-theme {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-height: 0;
 }
 
 .sidebar-header {
@@ -387,6 +388,7 @@ body.dark-theme {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 0;
 }
 
 .matrix {
@@ -395,6 +397,7 @@ body.dark-theme {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 20px;
+  min-height: 0;
 }
 
 .quadrant {
@@ -406,6 +409,8 @@ body.dark-theme {
   flex-direction: column;
   transition: all 0.2s;
   border: 2px solid transparent;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .quadrant.drag-over {
@@ -449,7 +454,7 @@ body.dark-theme {
   flex-direction: column;
   gap: 8px;
   overflow-y: auto;
-  min-height: 100px;
+  min-height: 0;
 }
 
 
