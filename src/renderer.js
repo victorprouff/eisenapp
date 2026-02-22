@@ -447,6 +447,31 @@ function createTaskElement(task, isDraggable = true) {
 
   taskEl.appendChild(checkbox);
   taskEl.appendChild(textSpan);
+
+  if (isDraggable && !task.completed) {
+    const siblings = getSiblingTasks(task);
+    const idx = siblings.indexOf(task);
+
+    const arrows = document.createElement('div');
+    arrows.className = 'task-arrows';
+
+    const upBtn = document.createElement('button');
+    upBtn.className = 'task-arrow';
+    upBtn.innerHTML = '↑';
+    upBtn.disabled = idx <= 0;
+    upBtn.onclick = (e) => { e.stopPropagation(); moveTask(task, 'up'); };
+
+    const downBtn = document.createElement('button');
+    downBtn.className = 'task-arrow';
+    downBtn.innerHTML = '↓';
+    downBtn.disabled = idx >= siblings.length - 1;
+    downBtn.onclick = (e) => { e.stopPropagation(); moveTask(task, 'down'); };
+
+    arrows.appendChild(upBtn);
+    arrows.appendChild(downBtn);
+    taskEl.appendChild(arrows);
+  }
+
   taskEl.appendChild(flagBtn);
   taskEl.appendChild(deleteBtn);
 
@@ -464,7 +489,6 @@ function handleDragStart(e) {
 function handleDragEnd(e) {
   e.target.classList.remove('dragging');
   draggedTask = null;
-
   document.querySelectorAll('.quadrant, .unassigned-tasks').forEach(el => {
     el.classList.remove('drag-over');
   });
@@ -472,12 +496,9 @@ function handleDragEnd(e) {
 
 function handleDragOver(e) {
   if (e.preventDefault) e.preventDefault();
-
   e.dataTransfer.dropEffect = 'move';
-
   const dropTarget = e.target.closest('.quadrant, .unassigned-tasks');
   if (dropTarget) dropTarget.classList.add('drag-over');
-
   return false;
 }
 
@@ -506,7 +527,6 @@ function handleDrop(e) {
     const taskId = draggedTask.dataset.taskId;
     const dropZone = e.target.closest('[data-drop-zone]');
     const zoneValue = dropZone?.dataset.dropZone;
-
     const task = tasks.find(t => t.id === taskId);
     if (task) {
       task.quadrant = (zoneValue && zoneValue !== 'unassigned') ? parseInt(zoneValue) : null;
@@ -516,6 +536,28 @@ function handleDrop(e) {
   }
 
   return false;
+}
+
+// Retourne les tâches non terminées du même quadrant visibles selon le filtre actif
+function getSiblingTasks(task) {
+  return filterByFlag(tasks.filter(t => t.quadrant === task.quadrant && !t.completed));
+}
+
+// Déplace une tâche vers le haut ou le bas au sein de son groupe visible
+function moveTask(task, direction) {
+  const siblings = getSiblingTasks(task);
+  const idx = siblings.indexOf(task);
+  const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+  if (targetIdx < 0 || targetIdx >= siblings.length) return;
+
+  const other = siblings[targetIdx];
+  const posA = tasks.indexOf(task);
+  const posB = tasks.indexOf(other);
+  tasks[posA] = other;
+  tasks[posB] = task;
+
+  saveTasks();
+  render();
 }
 
 // Filtre les tâches selon le flag actif

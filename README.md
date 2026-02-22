@@ -17,6 +17,7 @@ A task management application based on the **Eisenhower Matrix**, built with [Ta
 - **Task import**: import a list from a `.txt`/`.md` file (button, drag & drop onto the window, or paste a multi-line list). Supports markdown format (`- [ ]`, `- [x]`, `-`)
 - **Markdown export**: export the priority list as `.md` (clipboard copy or save with native file dialog), respects the active filter
 - **Pro/Personal flag**: tag tasks as Pro or Personal (click the badge on each task to cycle), with global filter in the title bar and export respecting the active filter
+- **Task ordering**: reorder non-completed tasks within each quadrant using ↑ ↓ buttons (visible on hover), order preserved in the priority list and export
 - **Multilingual**: French, English, Spanish, German — auto-detected from system language, persisted across sessions
 
 ## Architecture

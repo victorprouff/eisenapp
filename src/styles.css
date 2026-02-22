@@ -252,6 +252,37 @@ body.dark-theme {
   align-items: flex-start;
 }
 
+.task-arrows {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.task-item:hover .task-arrows {
+  opacity: 1;
+}
+
+.task-arrow {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1px 4px;
+  color: var(--text-tertiary);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.task-arrow:hover:not(:disabled) {
+  color: var(--text-primary);
+}
+
+.task-arrow:disabled {
+  opacity: 0.2;
+  cursor: default;
+}
+
 .task-item:hover {
   background: var(--task-hover);
   transform: translateY(-1px);
