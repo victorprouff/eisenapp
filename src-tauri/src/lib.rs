@@ -9,6 +9,12 @@ struct Settings {
     quadrant_names: [String; 4],
     #[serde(default = "default_quadrant_colors")]
     quadrant_colors: [String; 4],
+    #[serde(default = "default_flags_enabled")]
+    flags_enabled: bool,
+}
+
+fn default_flags_enabled() -> bool {
+    true
 }
 
 fn default_quadrant_colors() -> [String; 4] {
@@ -30,6 +36,7 @@ impl Default for Settings {
                 "À piocher si on en a envie et le temps".into(),
             ],
             quadrant_colors: default_quadrant_colors(),
+            flags_enabled: true,
         }
     }
 }

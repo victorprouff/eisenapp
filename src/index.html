@@ -174,85 +174,96 @@
 
   <div class="modal-overlay" id="settingsOverlay">
     <div class="modal modal-settings">
-      <h3 style="margin-bottom:20px;font-size:16px;" data-i18n="settings_title">Paramètres</h3>
+      <div class="settings-layout">
+        <nav class="settings-nav">
+          <button class="settings-tab-btn active" data-tab="general" data-i18n="settings_general">Général</button>
+          <button class="settings-tab-btn" data-tab="quadrants" data-i18n="settings_quadrants_section">Quadrants</button>
+        </nav>
+        <div class="settings-content">
 
-      <div class="settings-section">
-        <h4 data-i18n="settings_general">Général</h4>
-        <div class="settings-lang">
-          <span data-i18n="language_label">Langue</span>
-          <select id="langSelect">
-            <option value="fr">Français</option>
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="de">Deutsch</option>
-          </select>
+          <!-- Onglet Général -->
+          <div class="settings-tab-panel active" data-panel="general">
+            <div class="settings-row">
+              <span data-i18n="language_label">Langue</span>
+              <select id="langSelect">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+              </select>
+            </div>
+            <div class="settings-row">
+              <span data-i18n="settings_flags_label">Flags Pro/Perso</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="flagsToggle" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Onglet Quadrants -->
+          <div class="settings-tab-panel" data-panel="quadrants">
+            <div class="settings-fields">
+              <div class="settings-quadrant-row">
+                <div class="settings-quadrant-header">
+                  <span class="settings-quadrant-label" data-i18n="settings_q1_label">Quadrant 1 — Urgent &amp; Important</span>
+                  <button class="quadrant-reset-btn" data-quadrant-index="0" title="Réinitialiser">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
+                      <polyline points="1.5,1 1.5,3.5 4,3.5"/>
+                    </svg>
+                  </button>
+                </div>
+                <input type="text" id="qName1">
+                <div class="color-palette" data-quadrant="1"></div>
+              </div>
+              <div class="settings-quadrant-row">
+                <div class="settings-quadrant-header">
+                  <span class="settings-quadrant-label" data-i18n="settings_q2_label">Quadrant 2 — Important &amp; Non urgent</span>
+                  <button class="quadrant-reset-btn" data-quadrant-index="1" title="Réinitialiser">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
+                      <polyline points="1.5,1 1.5,3.5 4,3.5"/>
+                    </svg>
+                  </button>
+                </div>
+                <input type="text" id="qName2">
+                <div class="color-palette" data-quadrant="2"></div>
+              </div>
+              <div class="settings-quadrant-row">
+                <div class="settings-quadrant-header">
+                  <span class="settings-quadrant-label" data-i18n="settings_q3_label">Quadrant 3 — Urgent &amp; Non important</span>
+                  <button class="quadrant-reset-btn" data-quadrant-index="2" title="Réinitialiser">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
+                      <polyline points="1.5,1 1.5,3.5 4,3.5"/>
+                    </svg>
+                  </button>
+                </div>
+                <input type="text" id="qName3">
+                <div class="color-palette" data-quadrant="3"></div>
+              </div>
+              <div class="settings-quadrant-row">
+                <div class="settings-quadrant-header">
+                  <span class="settings-quadrant-label" data-i18n="settings_q4_label">Quadrant 4 — Non urgent &amp; Non important</span>
+                  <button class="quadrant-reset-btn" data-quadrant-index="3" title="Réinitialiser">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
+                      <polyline points="1.5,1 1.5,3.5 4,3.5"/>
+                    </svg>
+                  </button>
+                </div>
+                <input type="text" id="qName4">
+                <div class="color-palette" data-quadrant="4"></div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <div class="settings-section">
-        <h4 data-i18n="settings_quadrants_section">Quadrants</h4>
-        <div class="settings-fields">
-          <div class="settings-quadrant-row">
-            <div class="settings-quadrant-header">
-              <span class="settings-quadrant-label" data-i18n="settings_q1_label">Quadrant 1 — Urgent &amp; Important</span>
-              <button class="quadrant-reset-btn" data-quadrant-index="0" title="Réinitialiser">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
-                  <polyline points="1.5,1 1.5,3.5 4,3.5"/>
-                </svg>
-              </button>
-            </div>
-            <input type="text" id="qName1">
-            <div class="color-palette" data-quadrant="1"></div>
-          </div>
-          <div class="settings-quadrant-row">
-            <div class="settings-quadrant-header">
-              <span class="settings-quadrant-label" data-i18n="settings_q2_label">Quadrant 2 — Important &amp; Non urgent</span>
-              <button class="quadrant-reset-btn" data-quadrant-index="1" title="Réinitialiser">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
-                  <polyline points="1.5,1 1.5,3.5 4,3.5"/>
-                </svg>
-              </button>
-            </div>
-            <input type="text" id="qName2">
-            <div class="color-palette" data-quadrant="2"></div>
-          </div>
-          <div class="settings-quadrant-row">
-            <div class="settings-quadrant-header">
-              <span class="settings-quadrant-label" data-i18n="settings_q3_label">Quadrant 3 — Urgent &amp; Non important</span>
-              <button class="quadrant-reset-btn" data-quadrant-index="2" title="Réinitialiser">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
-                  <polyline points="1.5,1 1.5,3.5 4,3.5"/>
-                </svg>
-              </button>
-            </div>
-            <input type="text" id="qName3">
-            <div class="color-palette" data-quadrant="3"></div>
-          </div>
-          <div class="settings-quadrant-row">
-            <div class="settings-quadrant-header">
-              <span class="settings-quadrant-label" data-i18n="settings_q4_label">Quadrant 4 — Non urgent &amp; Non important</span>
-              <button class="quadrant-reset-btn" data-quadrant-index="3" title="Réinitialiser">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M1.5 3.5h4a3.5 3.5 0 1 1 0 7"/>
-                  <polyline points="1.5,1 1.5,3.5 4,3.5"/>
-                </svg>
-              </button>
-            </div>
-            <input type="text" id="qName4">
-            <div class="color-palette" data-quadrant="4"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-buttons settings-modal-buttons">
-        <button class="modal-btn modal-btn-reset" id="settingsReset" data-i18n="btn_reset">Réinitialiser</button>
-        <div class="modal-buttons-right">
-          <button class="modal-btn modal-btn-cancel" id="settingsCancel" data-i18n="btn_cancel">Annuler</button>
-          <button class="modal-btn modal-btn-confirm-green" id="settingsSave" data-i18n="btn_save">Enregistrer</button>
-        </div>
+      <div class="modal-buttons">
+        <button class="modal-btn modal-btn-cancel" id="settingsCancel" data-i18n="btn_cancel">Annuler</button>
+        <button class="modal-btn modal-btn-confirm-green" id="settingsSave" data-i18n="btn_save">Enregistrer</button>
       </div>
     </div>
   </div>

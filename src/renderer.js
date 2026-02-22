@@ -12,6 +12,8 @@ function getDefaultQuadrantColors() {
 let quadrantNames = null;
 let quadrantColors = null;
 let _savedColors = null; // snapshot à l'ouverture de la modale
+let _savedFlagsEnabled = null;
+let flagsEnabled = true;
 let activeFilter = 'all'; // 'all' | 'pro' | 'perso'
 
 const EMPTY_FLAG_ICON = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 1.5h7l-2.5 4 2.5 5H2V1.5z"/></svg>`;
@@ -113,27 +115,42 @@ function setupEventListeners() {
   // Sélecteur de langue
   document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
 
-  // Settings
+  // Settings — onglets
+  document.querySelectorAll('.settings-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.settings-tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`.settings-tab-panel[data-panel="${btn.dataset.tab}"]`).classList.add('active');
+    });
+  });
+
+  // Settings — toggle flags
+  document.getElementById('flagsToggle').addEventListener('change', (e) => {
+    flagsEnabled = e.target.checked;
+    applyFlagsEnabled();
+  });
+
+  // Settings — ouverture
   document.getElementById('settingsBtn').addEventListener('click', () => {
     _savedColors = [...quadrantColors];
+    _savedFlagsEnabled = flagsEnabled;
     for (let i = 0; i < 4; i++)
       document.getElementById(`qName${i + 1}`).value = quadrantNames[i];
+    document.getElementById('flagsToggle').checked = flagsEnabled;
     buildColorPalettes();
     document.getElementById('settingsOverlay').classList.add('visible');
   });
+
+  // Settings — annuler
   document.getElementById('settingsCancel').addEventListener('click', () => {
     quadrantColors = [..._savedColors];
+    flagsEnabled = _savedFlagsEnabled;
+    applyFlagsEnabled();
     applyQuadrantColors();
     _savedColors = null;
+    _savedFlagsEnabled = null;
     document.getElementById('settingsOverlay').classList.remove('visible');
-  });
-  document.getElementById('settingsReset').addEventListener('click', () => {
-    getDefaultQuadrantNames().forEach((name, i) => {
-      document.getElementById(`qName${i + 1}`).value = name;
-    });
-    quadrantColors = getDefaultQuadrantColors();
-    applyQuadrantColors();
-    buildColorPalettes();
   });
 
   // Reset individuel par quadrant
@@ -146,11 +163,16 @@ function setupEventListeners() {
     applyQuadrantColors();
     rebuildPalette(document.querySelector(`.color-palette[data-quadrant="${qi + 1}"]`), qi);
   });
+
+  // Settings — enregistrer
   document.getElementById('settingsSave').addEventListener('click', async () => {
     quadrantNames = [1, 2, 3, 4].map(i =>
       document.getElementById(`qName${i}`).value.trim() || quadrantNames[i - 1]
     );
+    flagsEnabled = document.getElementById('flagsToggle').checked;
+    applyFlagsEnabled();
     _savedColors = null;
+    _savedFlagsEnabled = null;
     await saveSettings();
     document.getElementById('settingsOverlay').classList.remove('visible');
   });
@@ -685,17 +707,30 @@ function buildColorPalettes() {
   });
 }
 
+function applyFlagsEnabled() {
+  document.body.classList.toggle('flags-disabled', !flagsEnabled);
+  if (!flagsEnabled && activeFilter !== 'all') {
+    activeFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    render();
+  }
+}
+
 async function loadSettings() {
   try {
     const s = await window.__TAURI__.core.invoke('load_settings');
     quadrantNames = s.quadrant_names;
     quadrantColors = s.quadrant_colors;
+    flagsEnabled = s.flags_enabled ?? true;
   } catch (e) {
     quadrantNames = getDefaultQuadrantNames();
     quadrantColors = getDefaultQuadrantColors();
+    flagsEnabled = true;
   }
   applyQuadrantNames();
   applyQuadrantColors();
+  applyFlagsEnabled();
 }
 
 function applyQuadrantNames() {
@@ -719,7 +754,7 @@ function resetQuadrantNamesToDefaults() {
 async function saveSettings() {
   try {
     await window.__TAURI__.core.invoke('save_settings', {
-      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors }
+      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors, flags_enabled: flagsEnabled }
     });
     applyQuadrantNames();
     applyQuadrantColors();

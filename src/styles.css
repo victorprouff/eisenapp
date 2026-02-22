@@ -823,23 +823,123 @@ body.dark-theme .theme-toggle:hover {
 
 /* Modale settings */
 .modal-settings {
-  max-width: 500px;
+  max-width: 600px;
 }
 
-/* Sections de la modale settings */
-.settings-section {
+/* Layout principal : nav gauche + contenu */
+.settings-layout {
+  display: flex;
+  gap: 0;
+  min-height: 280px;
   margin-bottom: 20px;
 }
 
-.settings-section h4 {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-tertiary);
-  margin-bottom: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border-color);
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 120px;
+  padding-right: 16px;
+  margin-right: 20px;
+  border-right: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.settings-tab-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.settings-tab-btn:hover {
+  background: var(--task-hover);
+  color: var(--text-primary);
+}
+
+.settings-tab-btn.active {
+  background: var(--task-hover);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.settings-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Panneaux d'onglets */
+.settings-tab-panel {
+  display: none;
+}
+
+.settings-tab-panel.active {
+  display: block;
+}
+
+/* Lignes dans l'onglet Général */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.settings-row + .settings-row {
+  border-top: 1px solid var(--border-color);
+}
+
+/* Toggle switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--border-color);
+  border-radius: 20px;
+  transition: background 0.2s;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: #007aff;
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(16px);
 }
 
 /* Lignes quadrant dans les settings */
@@ -940,14 +1040,6 @@ body.dark-theme .theme-toggle:hover {
   border-color: #007aff;
 }
 
-.settings-lang {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: var(--text-secondary);
-}
 #langSelect {
   padding: 3px 6px;
   border: 1px solid var(--border-color);
@@ -958,24 +1050,10 @@ body.dark-theme .theme-toggle:hover {
   cursor: pointer;
 }
 
-.settings-modal-buttons {
-  justify-content: space-between;
-}
-
-.modal-buttons-right {
-  display: flex;
-  gap: 12px;
-}
-
-.modal-btn-reset {
-  background: none;
-  color: var(--text-secondary);
-  padding: 10px 12px;
-}
-
-.modal-btn-reset:hover {
-  background: var(--task-hover);
-  color: var(--text-primary);
+/* Masquage des flags quand désactivés */
+.flags-disabled .filter-bar,
+.flags-disabled .task-flag {
+  display: none !important;
 }
 
 .modal-btn-confirm-green {

@@ -96,6 +96,7 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Perso',
     task_flag_tooltip: 'Changer le flag',
+    settings_flags_label: 'Flags Pro/Perso',
   },
 
   en: {
@@ -195,6 +196,7 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Personal',
     task_flag_tooltip: 'Change flag',
+    settings_flags_label: 'Pro/Personal flags',
   },
 
   es: {
@@ -294,6 +296,7 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Personal',
     task_flag_tooltip: 'Cambiar etiqueta',
+    settings_flags_label: 'Etiquetas Pro/Personal',
   },
 
   de: {
@@ -393,6 +396,7 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Privat',
     task_flag_tooltip: 'Kennzeichen ändern',
+    settings_flags_label: 'Pro/Privat-Kennzeichen',
   },
 };
 
