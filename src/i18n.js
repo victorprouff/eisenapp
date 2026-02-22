@@ -100,7 +100,7 @@ const translations = {
     flag_none: 'Aucun',
     flag_input_placeholder: 'Nouveau flag…',
     settings_density_label: 'Affichage',
-    density_normal: 'Normal',
+    density_normal: 'Large',
     density_compact: 'Compact',
   },
 
@@ -205,7 +205,7 @@ const translations = {
     flag_none: 'None',
     flag_input_placeholder: 'New flag…',
     settings_density_label: 'Display',
-    density_normal: 'Normal',
+    density_normal: 'Large',
     density_compact: 'Compact',
   },
 
@@ -310,7 +310,7 @@ const translations = {
     flag_none: 'Ninguno',
     flag_input_placeholder: 'Nueva etiqueta…',
     settings_density_label: 'Visualización',
-    density_normal: 'Normal',
+    density_normal: 'Large',
     density_compact: 'Compacto',
   },
 
@@ -415,7 +415,7 @@ const translations = {
     flag_none: 'Kein',
     flag_input_placeholder: 'Neues Flag…',
     settings_density_label: 'Anzeige',
-    density_normal: 'Normal',
+    density_normal: 'Large',
     density_compact: 'Kompakt',
   },
 };

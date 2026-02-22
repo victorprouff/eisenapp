@@ -15,7 +15,7 @@ let _savedColors = null; // snapshot à l'ouverture de la modale
 let _savedFlagsEnabled = null;
 let flagsEnabled = true;
 let _savedCompactMode = null;
-let compactMode = false;
+let compactMode = true;
 let flagList = ['Pro', 'Perso'];
 let editingFlagList = null;
 let flagColors = { Pro: '#1d4ed8', Perso: '#be185d' };
@@ -854,12 +854,13 @@ function buildFlagsList() {
     item.appendChild(delBtn);
     list.appendChild(item);
   });
+  document.querySelector('.flags-add-row').style.display = editingFlagList.length >= 7 ? 'none' : '';
 }
 
 function addFlagFromInput() {
   const input = document.getElementById('flagInput');
   const name = input.value.trim();
-  if (!name || editingFlagList.includes(name)) return;
+  if (!name || editingFlagList.includes(name) || editingFlagList.length >= 7) return;
   editingFlagList.push(name);
   editingFlagColors[name] = newFlagColor;
   input.value = '';
@@ -989,7 +990,7 @@ async function loadSettings() {
     quadrantNames = s.quadrant_names;
     quadrantColors = s.quadrant_colors;
     flagsEnabled = s.flags_enabled ?? true;
-    compactMode = s.compact_mode ?? false;
+    compactMode = s.compact_mode ?? true;
     flagList = s.flags?.length ? s.flags : ['Pro', 'Perso'];
     flagColors = Object.keys(s.flag_colors || {}).length
       ? s.flag_colors
@@ -998,7 +999,7 @@ async function loadSettings() {
     quadrantNames = getDefaultQuadrantNames();
     quadrantColors = getDefaultQuadrantColors();
     flagsEnabled = true;
-    compactMode = false;
+    compactMode = true;
     flagList = ['Pro', 'Perso'];
     flagColors = { Pro: '#1d4ed8', Perso: '#be185d' };
   }
