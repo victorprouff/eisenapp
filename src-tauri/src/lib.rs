@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::fs;
 use std::sync::Mutex;
 use tauri::{Emitter, Manager};
@@ -15,6 +16,8 @@ struct Settings {
     compact_mode: bool,
     #[serde(default = "default_flags")]
     flags: Vec<String>,
+    #[serde(default)]
+    flag_colors: HashMap<String, String>,
 }
 
 fn default_flags_enabled() -> bool {
@@ -47,6 +50,7 @@ impl Default for Settings {
             flags_enabled: true,
             compact_mode: false,
             flags: default_flags(),
+            flag_colors: HashMap::new(),
         }
     }
 }

@@ -331,17 +331,15 @@ body.dark-theme {
 .task-flag svg {
   display: block;
 }
-.task-flag[data-flag="Pro"],
-.task-flag[data-flag="pro"] {
-  background: #dbeafe;
-  color: #1d4ed8;
-  border-color: #93c5fd;
-}
-.task-flag[data-flag="Perso"],
-.task-flag[data-flag="perso"] {
-  background: #fce7f3;
-  color: #be185d;
-  border-color: #f9a8d4;
+
+/* Petite pastille couleur dans le dropdown de sélection */
+.flag-option-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 7px;
+  flex-shrink: 0;
 }
 
 /* Dropdown de sélection de flag */
@@ -1095,6 +1093,60 @@ body.dark-theme .theme-toggle:hover {
   display: none !important;
 }
 
+/* Palette de couleur pour les flags */
+.flag-color-palette {
+  position: fixed;
+  z-index: 10000;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px var(--shadow);
+  padding: 8px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 132px;
+}
+
+.flag-color-palette.visible {
+  display: flex;
+}
+
+.flag-color-option {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s, border-color 0.1s;
+  flex-shrink: 0;
+}
+
+.flag-color-option:hover {
+  transform: scale(1.2);
+}
+
+.flag-color-option.active {
+  border-color: var(--text-primary);
+}
+
+/* Pastille couleur cliquable (settings flags list + add row) */
+.flag-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,0.15);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.1s;
+}
+
+.flag-color-dot:hover {
+  transform: scale(1.2);
+}
+
 /* Gestionnaire de flags dans les settings */
 .settings-flags-manager {
   padding: 8px 0 4px;
@@ -1113,8 +1165,8 @@ body.dark-theme .theme-toggle:hover {
 .flag-item {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 3px 6px 3px 9px;
+  gap: 6px;
+  padding: 3px 6px 3px 8px;
   border-radius: 12px;
   border: 1px solid var(--border-color);
   font-size: 12px;
