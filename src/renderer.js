@@ -378,6 +378,7 @@ function addTask() {
     text: text,
     quadrant: null,
     completed: false,
+    flag: activeFilter !== 'all' ? activeFilter : null,
     createdAt: new Date().toISOString()
   };
 
