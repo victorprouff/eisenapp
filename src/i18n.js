@@ -96,7 +96,9 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Perso',
     task_flag_tooltip: 'Changer le flag',
-    settings_flags_label: 'Flags Pro/Perso',
+    settings_flags_label: 'Flags',
+    flag_none: 'Aucun',
+    flag_input_placeholder: 'Nouveau flag…',
     settings_density_label: 'Affichage',
     density_normal: 'Normal',
     density_compact: 'Compact',
@@ -199,7 +201,9 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Personal',
     task_flag_tooltip: 'Change flag',
-    settings_flags_label: 'Pro/Personal flags',
+    settings_flags_label: 'Flags',
+    flag_none: 'None',
+    flag_input_placeholder: 'New flag…',
     settings_density_label: 'Display',
     density_normal: 'Normal',
     density_compact: 'Compact',
@@ -302,7 +306,9 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Personal',
     task_flag_tooltip: 'Cambiar etiqueta',
-    settings_flags_label: 'Etiquetas Pro/Personal',
+    settings_flags_label: 'Etiquetas',
+    flag_none: 'Ninguno',
+    flag_input_placeholder: 'Nueva etiqueta…',
     settings_density_label: 'Visualización',
     density_normal: 'Normal',
     density_compact: 'Compacto',
@@ -405,7 +411,9 @@ const translations = {
     flag_pro: 'Pro',
     flag_perso: 'Privat',
     task_flag_tooltip: 'Kennzeichen ändern',
-    settings_flags_label: 'Pro/Privat-Kennzeichen',
+    settings_flags_label: 'Flags',
+    flag_none: 'Kein',
+    flag_input_placeholder: 'Neues Flag…',
     settings_density_label: 'Anzeige',
     density_normal: 'Normal',
     density_compact: 'Kompakt',
@@ -444,5 +452,6 @@ function setLang(lang) {
   localStorage.setItem('eisen-lang', lang);
   applyTranslations();
   if (typeof resetQuadrantNamesToDefaults === 'function') resetQuadrantNamesToDefaults();
+  if (typeof buildFilterBar === 'function') buildFilterBar();
   if (typeof render === 'function') render();
 }

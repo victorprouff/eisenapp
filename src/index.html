@@ -193,11 +193,18 @@
               </select>
             </div>
             <div class="settings-row">
-              <span data-i18n="settings_flags_label">Flags Pro/Perso</span>
+              <span data-i18n="settings_flags_label">Flags</span>
               <label class="toggle-switch">
                 <input type="checkbox" id="flagsToggle" checked>
                 <span class="toggle-slider"></span>
               </label>
+            </div>
+            <div class="settings-flags-manager" id="flagsManager">
+              <div id="flagsList" class="flags-list"></div>
+              <div class="flags-add-row">
+                <input type="text" id="flagInput" data-i18n-placeholder="flag_input_placeholder" placeholder="Nouveau flag…">
+                <button id="addFlagBtn" data-i18n="btn_add">Ajouter</button>
+              </div>
             </div>
             <div class="settings-row">
               <span data-i18n="settings_density_label">Affichage</span>
@@ -281,6 +288,8 @@
     <span data-i18n="toast_task_deleted">Tâche supprimée</span>
     <button id="undoBtn" data-i18n="toast_undo">Annuler</button>
   </div>
+
+  <div class="flag-dropdown" id="flagDropdown"></div>
 
   <script src="i18n.js"></script>
   <script src="renderer.js"></script>

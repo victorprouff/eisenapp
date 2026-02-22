@@ -16,7 +16,13 @@ let _savedFlagsEnabled = null;
 let flagsEnabled = true;
 let _savedCompactMode = null;
 let compactMode = false;
-let activeFilter = 'all'; // 'all' | 'pro' | 'perso'
+let flagList = ['Pro', 'Perso'];
+let editingFlagList = null;
+let activeFilter = 'all';
+
+// Dropdown flag
+let _dropdownTask = null;
+let _dropdownBtn = null;
 
 const EMPTY_FLAG_ICON = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 1.5h7l-2.5 4 2.5 5H2V1.5z"/></svg>`;
 
@@ -38,6 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   applyTranslations();
   await loadTasks();
   await loadSettings();
+  buildFilterBar();
   setupEventListeners();
   render();
 });
@@ -117,6 +124,13 @@ function setupEventListeners() {
   // Sélecteur de langue
   document.getElementById('langSelect').addEventListener('change', (e) => setLang(e.target.value));
 
+  // Fermer le dropdown flag au clic extérieur
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#flagDropdown') && !e.target.closest('.task-flag')) {
+      closeFlagDropdown();
+    }
+  });
+
   // Settings — onglets
   document.querySelectorAll('.settings-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -148,12 +162,14 @@ function setupEventListeners() {
     _savedColors = [...quadrantColors];
     _savedFlagsEnabled = flagsEnabled;
     _savedCompactMode = compactMode;
+    editingFlagList = [...flagList];
     for (let i = 0; i < 4; i++)
       document.getElementById(`qName${i + 1}`).value = quadrantNames[i];
     document.getElementById('flagsToggle').checked = flagsEnabled;
     document.querySelectorAll('.density-btn').forEach(b =>
       b.classList.toggle('active', b.dataset.density === (compactMode ? 'compact' : 'normal'))
     );
+    buildFlagsList();
     buildColorPalettes();
     document.getElementById('settingsOverlay').classList.add('visible');
   });
@@ -163,6 +179,7 @@ function setupEventListeners() {
     quadrantColors = [..._savedColors];
     flagsEnabled = _savedFlagsEnabled;
     compactMode = _savedCompactMode;
+    editingFlagList = null;
     applyFlagsEnabled();
     applyCompactMode();
     applyQuadrantColors();
@@ -190,12 +207,25 @@ function setupEventListeners() {
     );
     flagsEnabled = document.getElementById('flagsToggle').checked;
     compactMode = document.querySelector('.density-btn.active')?.dataset.density === 'compact';
+
+    // Nettoyer les tâches dont le flag a été supprimé
+    const removedFlags = flagList.filter(f => !editingFlagList.includes(f));
+    if (removedFlags.length > 0) {
+      tasks.forEach(task => { if (removedFlags.includes(task.flag)) task.flag = null; });
+      if (removedFlags.includes(activeFilter)) { activeFilter = 'all'; }
+      await saveTasks();
+    }
+    flagList = [...editingFlagList];
+    editingFlagList = null;
+
     applyFlagsEnabled();
     applyCompactMode();
+    buildFilterBar();
     _savedColors = null;
     _savedFlagsEnabled = null;
     _savedCompactMode = null;
     await saveSettings();
+    render();
     document.getElementById('settingsOverlay').classList.remove('visible');
   });
 
@@ -221,14 +251,10 @@ function setupEventListeners() {
     }
   });
 
-  // Boutons filtre pro/perso
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      activeFilter = btn.dataset.filter;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      render();
-    });
+  // Gestionnaire d'ajout de flag dans les settings
+  document.getElementById('addFlagBtn').addEventListener('click', addFlagFromInput);
+  document.getElementById('flagInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); addFlagFromInput(); }
   });
 
   // Paste multiligne
@@ -470,15 +496,13 @@ function createTaskElement(task, isDraggable = true) {
   });
 
   const flagBtn = document.createElement('button');
-  flagBtn.className = 'task-flag' + (task.flag ? ` flag-${task.flag}` : '');
+  flagBtn.className = 'task-flag';
+  flagBtn.dataset.flag = task.flag || '';
   flagBtn.title = t('task_flag_tooltip');
-  flagBtn.innerHTML = task.flag ? t(`flag_${task.flag}`) : EMPTY_FLAG_ICON;
+  flagBtn.innerHTML = task.flag ? task.flag : EMPTY_FLAG_ICON;
   flagBtn.onclick = (e) => {
     e.stopPropagation();
-    const next = task.flag === null || task.flag === undefined ? 'pro' : task.flag === 'pro' ? 'perso' : null;
-    task.flag = next;
-    saveTasks();
-    render();
+    openFlagDropdown(task, flagBtn);
   };
 
   const deleteBtn = document.createElement('button');
@@ -729,6 +753,114 @@ function buildColorPalettes() {
   });
 }
 
+// Reconstruit la barre de filtre selon flagList
+function buildFilterBar() {
+  const bar = document.querySelector('.filter-bar');
+  bar.innerHTML = '';
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn' + (activeFilter === 'all' ? ' active' : '');
+  allBtn.dataset.filter = 'all';
+  allBtn.textContent = t('filter_all');
+  allBtn.addEventListener('click', () => {
+    activeFilter = 'all';
+    buildFilterBar();
+    render();
+  });
+  bar.appendChild(allBtn);
+
+  flagList.forEach(flag => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (activeFilter === flag ? ' active' : '');
+    btn.dataset.filter = flag;
+    btn.textContent = flag;
+    btn.addEventListener('click', () => {
+      activeFilter = flag;
+      buildFilterBar();
+      render();
+    });
+    bar.appendChild(btn);
+  });
+}
+
+// Reconstruit la liste de flags dans les settings
+function buildFlagsList() {
+  const list = document.getElementById('flagsList');
+  list.innerHTML = '';
+  editingFlagList.forEach((flag, i) => {
+    const item = document.createElement('div');
+    item.className = 'flag-item';
+
+    const name = document.createElement('span');
+    name.textContent = flag;
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'flag-item-delete';
+    delBtn.innerHTML = '×';
+    delBtn.title = 'Supprimer';
+    delBtn.onclick = () => {
+      editingFlagList.splice(i, 1);
+      buildFlagsList();
+    };
+
+    item.appendChild(name);
+    item.appendChild(delBtn);
+    list.appendChild(item);
+  });
+}
+
+function addFlagFromInput() {
+  const input = document.getElementById('flagInput');
+  const name = input.value.trim();
+  if (!name || editingFlagList.includes(name)) return;
+  editingFlagList.push(name);
+  input.value = '';
+  buildFlagsList();
+}
+
+// Dropdown de sélection de flag sur une tâche
+function openFlagDropdown(task, btn) {
+  if (_dropdownBtn === btn) { closeFlagDropdown(); return; }
+  closeFlagDropdown();
+  _dropdownTask = task;
+  _dropdownBtn = btn;
+
+  const dropdown = document.getElementById('flagDropdown');
+  dropdown.innerHTML = '';
+
+  const noneOpt = document.createElement('button');
+  noneOpt.className = 'flag-option' + (!task.flag ? ' selected' : '');
+  noneOpt.textContent = t('flag_none');
+  noneOpt.onclick = () => setTaskFlag(task, null);
+  dropdown.appendChild(noneOpt);
+
+  flagList.forEach(flag => {
+    const opt = document.createElement('button');
+    opt.className = 'flag-option' + (task.flag === flag ? ' selected' : '');
+    opt.textContent = flag;
+    opt.onclick = () => setTaskFlag(task, flag);
+    dropdown.appendChild(opt);
+  });
+
+  const rect = btn.getBoundingClientRect();
+  dropdown.style.left = rect.left + 'px';
+  dropdown.style.top = (rect.bottom + 4) + 'px';
+  dropdown.classList.add('visible');
+}
+
+function closeFlagDropdown() {
+  document.getElementById('flagDropdown').classList.remove('visible');
+  _dropdownTask = null;
+  _dropdownBtn = null;
+}
+
+function setTaskFlag(task, flag) {
+  task.flag = flag;
+  closeFlagDropdown();
+  saveTasks();
+  render();
+}
+
 function applyCompactMode() {
   document.body.classList.toggle('compact-mode', compactMode);
 }
@@ -750,11 +882,13 @@ async function loadSettings() {
     quadrantColors = s.quadrant_colors;
     flagsEnabled = s.flags_enabled ?? true;
     compactMode = s.compact_mode ?? false;
+    flagList = s.flags?.length ? s.flags : ['Pro', 'Perso'];
   } catch (e) {
     quadrantNames = getDefaultQuadrantNames();
     quadrantColors = getDefaultQuadrantColors();
     flagsEnabled = true;
     compactMode = false;
+    flagList = ['Pro', 'Perso'];
   }
   applyQuadrantNames();
   applyQuadrantColors();
@@ -783,7 +917,7 @@ function resetQuadrantNamesToDefaults() {
 async function saveSettings() {
   try {
     await window.__TAURI__.core.invoke('save_settings', {
-      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors, flags_enabled: flagsEnabled, compact_mode: compactMode }
+      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors, flags_enabled: flagsEnabled, compact_mode: compactMode, flags: flagList }
     });
     applyQuadrantNames();
     applyQuadrantColors();

@@ -13,10 +13,16 @@ struct Settings {
     flags_enabled: bool,
     #[serde(default)]
     compact_mode: bool,
+    #[serde(default = "default_flags")]
+    flags: Vec<String>,
 }
 
 fn default_flags_enabled() -> bool {
     true
+}
+
+fn default_flags() -> Vec<String> {
+    vec!["Pro".into(), "Perso".into()]
 }
 
 fn default_quadrant_colors() -> [String; 4] {
@@ -40,6 +46,7 @@ impl Default for Settings {
             quadrant_colors: default_quadrant_colors(),
             flags_enabled: true,
             compact_mode: false,
+            flags: default_flags(),
         }
     }
 }

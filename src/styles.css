@@ -315,7 +315,7 @@ body.dark-theme {
   color: var(--q1-color);
 }
 
-/* Badge flag pro/perso */
+/* Badge flag */
 .task-flag {
   padding: 2px 7px;
   border-radius: 8px;
@@ -331,25 +331,59 @@ body.dark-theme {
 .task-flag svg {
   display: block;
 }
-.task-flag.flag-pro {
+.task-flag[data-flag="Pro"],
+.task-flag[data-flag="pro"] {
   background: #dbeafe;
   color: #1d4ed8;
   border-color: #93c5fd;
 }
-.task-flag.flag-perso {
+.task-flag[data-flag="Perso"],
+.task-flag[data-flag="perso"] {
   background: #fce7f3;
   color: #be185d;
   border-color: #f9a8d4;
 }
-.task-flag.flag-pro {
-  background: #dbeafe;
-  color: #1d4ed8;
-  border-color: #93c5fd;
+
+/* Dropdown de sélection de flag */
+.flag-dropdown {
+  position: fixed;
+  z-index: 9999;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px var(--shadow);
+  padding: 4px;
+  min-width: 110px;
+  display: none;
 }
-.task-flag.flag-perso {
-  background: #fce7f3;
-  color: #be185d;
-  border-color: #f9a8d4;
+
+.flag-dropdown.visible {
+  display: block;
+}
+
+.flag-option {
+  display: block;
+  width: 100%;
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.flag-option:hover {
+  background: var(--task-hover);
+  color: var(--text-primary);
+}
+
+.flag-option.selected {
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 /* Barre de filtres pro/perso (dans la titlebar) */
@@ -1059,6 +1093,90 @@ body.dark-theme .theme-toggle:hover {
 .flags-disabled .filter-bar,
 .flags-disabled .task-flag {
   display: none !important;
+}
+
+/* Gestionnaire de flags dans les settings */
+.settings-flags-manager {
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--border-color);
+  margin-bottom: 4px;
+}
+
+.flags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+  min-height: 24px;
+}
+
+.flag-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px 3px 9px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  background: var(--task-bg);
+  color: var(--text-secondary);
+}
+
+.flag-item-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  font-size: 15px;
+  padding: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.flag-item-delete:hover {
+  color: var(--q1-color);
+}
+
+.flags-add-row {
+  display: flex;
+  gap: 6px;
+}
+
+.flags-add-row input {
+  flex: 1;
+  padding: 5px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.flags-add-row input:focus {
+  border-color: #007aff;
+}
+
+.flags-add-row button {
+  padding: 5px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.flags-add-row button:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
 }
 
 /* Segmented control densité */
