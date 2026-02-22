@@ -97,6 +97,9 @@ const translations = {
     flag_perso: 'Perso',
     task_flag_tooltip: 'Changer le flag',
     settings_flags_label: 'Flags Pro/Perso',
+    settings_density_label: 'Affichage',
+    density_normal: 'Normal',
+    density_compact: 'Compact',
   },
 
   en: {
@@ -197,6 +200,9 @@ const translations = {
     flag_perso: 'Personal',
     task_flag_tooltip: 'Change flag',
     settings_flags_label: 'Pro/Personal flags',
+    settings_density_label: 'Display',
+    density_normal: 'Normal',
+    density_compact: 'Compact',
   },
 
   es: {
@@ -297,6 +303,9 @@ const translations = {
     flag_perso: 'Personal',
     task_flag_tooltip: 'Cambiar etiqueta',
     settings_flags_label: 'Etiquetas Pro/Personal',
+    settings_density_label: 'Visualización',
+    density_normal: 'Normal',
+    density_compact: 'Compacto',
   },
 
   de: {
@@ -397,6 +406,9 @@ const translations = {
     flag_perso: 'Privat',
     task_flag_tooltip: 'Kennzeichen ändern',
     settings_flags_label: 'Pro/Privat-Kennzeichen',
+    settings_density_label: 'Anzeige',
+    density_normal: 'Normal',
+    density_compact: 'Kompakt',
   },
 };
 

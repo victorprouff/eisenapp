@@ -1056,6 +1056,102 @@ body.dark-theme .theme-toggle:hover {
   display: none !important;
 }
 
+/* Segmented control densité */
+.density-control {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.density-btn {
+  background: none;
+  border: none;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.density-btn + .density-btn {
+  border-left: 1px solid var(--border-color);
+}
+
+.density-btn.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+/* Mode compact */
+.compact-mode .container {
+  padding: 12px;
+  padding-top: 52px;
+  gap: 12px;
+}
+
+.compact-mode .sidebar-header {
+  padding: 12px;
+}
+
+.compact-mode .sidebar-header h2 {
+  font-size: 15px;
+}
+
+.compact-mode .add-task-section {
+  padding: 12px;
+}
+
+.compact-mode .unassigned-tasks {
+  padding: 12px;
+}
+
+.compact-mode .unassigned-tasks h3 {
+  margin-bottom: 8px;
+}
+
+.compact-mode .task-list,
+.compact-mode .quadrant-tasks,
+.compact-mode .priority-tasks {
+  gap: 4px;
+}
+
+.compact-mode .task-item {
+  padding: 7px 10px;
+}
+
+.compact-mode .matrix {
+  gap: 12px;
+}
+
+.compact-mode .quadrant {
+  padding: 12px;
+}
+
+.compact-mode .quadrant-header {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+}
+
+.compact-mode .quadrant-header h3 {
+  font-size: 15px;
+}
+
+.compact-mode .prioritized-list {
+  padding: 12px;
+  gap: 10px;
+}
+
+.compact-mode .priority-section {
+  margin-bottom: 4px;
+}
+
+.compact-mode .priority-header {
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+
 .modal-btn-confirm-green {
   background: #34c759;
   color: white;

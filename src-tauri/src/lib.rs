@@ -11,6 +11,8 @@ struct Settings {
     quadrant_colors: [String; 4],
     #[serde(default = "default_flags_enabled")]
     flags_enabled: bool,
+    #[serde(default)]
+    compact_mode: bool,
 }
 
 fn default_flags_enabled() -> bool {
@@ -37,6 +39,7 @@ impl Default for Settings {
             ],
             quadrant_colors: default_quadrant_colors(),
             flags_enabled: true,
+            compact_mode: false,
         }
     }
 }

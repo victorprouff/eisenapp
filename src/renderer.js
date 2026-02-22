@@ -14,6 +14,8 @@ let quadrantColors = null;
 let _savedColors = null; // snapshot à l'ouverture de la modale
 let _savedFlagsEnabled = null;
 let flagsEnabled = true;
+let _savedCompactMode = null;
+let compactMode = false;
 let activeFilter = 'all'; // 'all' | 'pro' | 'perso'
 
 const EMPTY_FLAG_ICON = `<svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 1.5h7l-2.5 4 2.5 5H2V1.5z"/></svg>`;
@@ -131,13 +133,27 @@ function setupEventListeners() {
     applyFlagsEnabled();
   });
 
+  // Settings — density buttons
+  document.querySelectorAll('.density-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.density-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      compactMode = btn.dataset.density === 'compact';
+      applyCompactMode();
+    });
+  });
+
   // Settings — ouverture
   document.getElementById('settingsBtn').addEventListener('click', () => {
     _savedColors = [...quadrantColors];
     _savedFlagsEnabled = flagsEnabled;
+    _savedCompactMode = compactMode;
     for (let i = 0; i < 4; i++)
       document.getElementById(`qName${i + 1}`).value = quadrantNames[i];
     document.getElementById('flagsToggle').checked = flagsEnabled;
+    document.querySelectorAll('.density-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.density === (compactMode ? 'compact' : 'normal'))
+    );
     buildColorPalettes();
     document.getElementById('settingsOverlay').classList.add('visible');
   });
@@ -146,10 +162,13 @@ function setupEventListeners() {
   document.getElementById('settingsCancel').addEventListener('click', () => {
     quadrantColors = [..._savedColors];
     flagsEnabled = _savedFlagsEnabled;
+    compactMode = _savedCompactMode;
     applyFlagsEnabled();
+    applyCompactMode();
     applyQuadrantColors();
     _savedColors = null;
     _savedFlagsEnabled = null;
+    _savedCompactMode = null;
     document.getElementById('settingsOverlay').classList.remove('visible');
   });
 
@@ -170,9 +189,12 @@ function setupEventListeners() {
       document.getElementById(`qName${i}`).value.trim() || quadrantNames[i - 1]
     );
     flagsEnabled = document.getElementById('flagsToggle').checked;
+    compactMode = document.querySelector('.density-btn.active')?.dataset.density === 'compact';
     applyFlagsEnabled();
+    applyCompactMode();
     _savedColors = null;
     _savedFlagsEnabled = null;
+    _savedCompactMode = null;
     await saveSettings();
     document.getElementById('settingsOverlay').classList.remove('visible');
   });
@@ -707,6 +729,10 @@ function buildColorPalettes() {
   });
 }
 
+function applyCompactMode() {
+  document.body.classList.toggle('compact-mode', compactMode);
+}
+
 function applyFlagsEnabled() {
   document.body.classList.toggle('flags-disabled', !flagsEnabled);
   if (!flagsEnabled && activeFilter !== 'all') {
@@ -723,14 +749,17 @@ async function loadSettings() {
     quadrantNames = s.quadrant_names;
     quadrantColors = s.quadrant_colors;
     flagsEnabled = s.flags_enabled ?? true;
+    compactMode = s.compact_mode ?? false;
   } catch (e) {
     quadrantNames = getDefaultQuadrantNames();
     quadrantColors = getDefaultQuadrantColors();
     flagsEnabled = true;
+    compactMode = false;
   }
   applyQuadrantNames();
   applyQuadrantColors();
   applyFlagsEnabled();
+  applyCompactMode();
 }
 
 function applyQuadrantNames() {
@@ -754,7 +783,7 @@ function resetQuadrantNamesToDefaults() {
 async function saveSettings() {
   try {
     await window.__TAURI__.core.invoke('save_settings', {
-      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors, flags_enabled: flagsEnabled }
+      settings: { quadrant_names: quadrantNames, quadrant_colors: quadrantColors, flags_enabled: flagsEnabled, compact_mode: compactMode }
     });
     applyQuadrantNames();
     applyQuadrantColors();
