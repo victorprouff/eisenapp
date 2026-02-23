@@ -21,7 +21,7 @@ let editingFlagList = null;
 let flagColors = { Pro: '#1d4ed8', Perso: '#be185d' };
 let editingFlagColors = null;
 let newFlagColor = '#16a34a';
-let activeFilter = 'all';
+let activeFilter = new Set(); // ensemble vide = "Tous"
 let showCompleted = true;
 
 // Dropdown flag
@@ -229,7 +229,7 @@ function setupEventListeners() {
     const removedFlags = flagList.filter(f => !editingFlagList.includes(f));
     if (removedFlags.length > 0) {
       tasks.forEach(task => { if (removedFlags.includes(task.flag)) task.flag = null; });
-      if (removedFlags.includes(activeFilter)) { activeFilter = 'all'; }
+      removedFlags.forEach(f => activeFilter.delete(f));
       await saveTasks();
     }
     flagList = [...editingFlagList];
@@ -348,7 +348,7 @@ function parseTaskLines(text) {
 
 // Crée et ajoute les tâches parsées
 function importTaskLines(parsedLines) {
-  const flag = activeFilter !== 'all' ? activeFilter : null;
+  const flag = activeFilter.size === 1 ? [...activeFilter][0] : null;
   parsedLines.forEach(({ text, completed }) => {
     tasks.push({
       id: Date.now().toString() + Math.random().toString(36).slice(2),
@@ -380,7 +380,7 @@ function addTask() {
     text: text,
     quadrant: null,
     completed: false,
-    flag: activeFilter !== 'all' ? activeFilter : null,
+    flag: activeFilter.size === 1 ? [...activeFilter][0] : null,
     createdAt: new Date().toISOString()
   };
 
@@ -666,8 +666,8 @@ function moveTask(task, direction) {
 
 // Filtre uniquement par flag actif (sans tenir compte de showCompleted)
 function filterByFlag(list) {
-  if (activeFilter === 'all') return list;
-  return list.filter(t => t.flag === activeFilter);
+  if (activeFilter.size === 0) return list;
+  return list.filter(t => activeFilter.has(t.flag));
 }
 
 // Filtre les tâches selon le flag actif et la visibilité des terminées
@@ -802,11 +802,11 @@ function buildFilterBar() {
   bar.innerHTML = '';
 
   const allBtn = document.createElement('button');
-  allBtn.className = 'filter-btn' + (activeFilter === 'all' ? ' active' : '');
+  allBtn.className = 'filter-btn' + (activeFilter.size === 0 ? ' active' : '');
   allBtn.dataset.filter = 'all';
   allBtn.textContent = t('filter_all');
   allBtn.addEventListener('click', () => {
-    activeFilter = 'all';
+    activeFilter = new Set();
     buildFilterBar();
     render();
   });
@@ -814,11 +814,15 @@ function buildFilterBar() {
 
   flagList.forEach(flag => {
     const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (activeFilter === flag ? ' active' : '');
+    btn.className = 'filter-btn' + (activeFilter.has(flag) ? ' active' : '');
     btn.dataset.filter = flag;
     btn.textContent = flag;
     btn.addEventListener('click', () => {
-      activeFilter = flag;
+      if (activeFilter.has(flag)) {
+        activeFilter.delete(flag);
+      } else {
+        activeFilter.add(flag);
+      }
       buildFilterBar();
       render();
     });
@@ -1000,8 +1004,8 @@ function applyCompactMode() {
 
 function applyFlagsEnabled() {
   document.body.classList.toggle('flags-disabled', !flagsEnabled);
-  if (!flagsEnabled && activeFilter !== 'all') {
-    activeFilter = 'all';
+  if (!flagsEnabled && activeFilter.size > 0) {
+    activeFilter = new Set();
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
     render();
