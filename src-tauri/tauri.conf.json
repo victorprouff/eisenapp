@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/nicegui/nicegui/main/nicegui/tauri/tauri-conf-schema.json",
     "productName": "EisenApp",
-    "version": "1.14.0",
+    "version": "1.15.0",
     "identifier": "com.eisenhower.tasks-rust",
     "build": {
         "frontendDist": "../src"
