@@ -348,10 +348,11 @@ function parseTaskLines(text) {
 
 // Crée et ajoute les tâches parsées
 function importTaskLines(parsedLines) {
+  const flag = activeFilter !== 'all' ? activeFilter : null;
   parsedLines.forEach(({ text, completed }) => {
     tasks.push({
       id: Date.now().toString() + Math.random().toString(36).slice(2),
-      text, quadrant: null, completed,
+      text, quadrant: null, completed, flag,
       createdAt: new Date().toISOString()
     });
   });
