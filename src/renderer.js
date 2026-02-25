@@ -85,13 +85,20 @@ function setupEventListeners() {
 
   // Panneau droit rétractable
   const rightPanelWrapper = document.querySelector('.right-panel-wrapper');
-  if (localStorage.getItem('right-panel-collapsed') !== 'false') {
-    rightPanelWrapper.classList.add('collapsed');
+  const rightPanelBackdrop = document.getElementById('rightPanelBackdrop');
+
+  function setRightPanel(collapsed) {
+    rightPanelWrapper.classList.toggle('collapsed', collapsed);
+    rightPanelBackdrop.classList.toggle('visible', !collapsed);
+    localStorage.setItem('right-panel-collapsed', collapsed);
   }
+
+  setRightPanel(localStorage.getItem('right-panel-collapsed') !== 'false');
+
   document.getElementById('rightPanelTab').addEventListener('click', () => {
-    rightPanelWrapper.classList.toggle('collapsed');
-    localStorage.setItem('right-panel-collapsed', rightPanelWrapper.classList.contains('collapsed'));
+    setRightPanel(!rightPanelWrapper.classList.contains('collapsed'));
   });
+  rightPanelBackdrop.addEventListener('click', () => setRightPanel(true));
 
   // Supprimer toutes les tâches
   document.getElementById('clearTasks').addEventListener('click', removeAllTasks);
@@ -779,7 +786,10 @@ function moveTask(task, direction) {
 // Filtre uniquement par flag actif (sans tenir compte de showCompleted)
 function filterByFlag(list) {
   if (activeFilter.size === 0) return list;
-  return list.filter(t => activeFilter.has(t.flag));
+  return list.filter(t => {
+    if (!t.flag) return activeFilter.has('__none__');
+    return activeFilter.has(t.flag);
+  });
 }
 
 // Filtre les tâches selon le flag actif et la visibilité des terminées
@@ -940,6 +950,23 @@ function buildFilterBar() {
     });
     bar.appendChild(btn);
   });
+
+  if (flagsEnabled) {
+    const noneBtn = document.createElement('button');
+    noneBtn.className = 'filter-btn' + (activeFilter.has('__none__') ? ' active' : '');
+    noneBtn.dataset.filter = '__none__';
+    noneBtn.textContent = t('flag_none');
+    noneBtn.addEventListener('click', () => {
+      if (activeFilter.has('__none__')) {
+        activeFilter.delete('__none__');
+      } else {
+        activeFilter.add('__none__');
+      }
+      buildFilterBar();
+      render();
+    });
+    bar.appendChild(noneBtn);
+  }
 
   const sep = document.createElement('span');
   sep.className = 'filter-separator';
