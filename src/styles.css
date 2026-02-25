@@ -640,6 +640,37 @@ body.dark-theme .theme-toggle:hover {
   text-align: center;
 }
 
+.delete-filter-label {
+  font-size: 13px !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 8px !important;
+  text-align: left !important;
+}
+
+.delete-filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.delete-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.delete-filter-row input[type=checkbox] {
+  cursor: pointer;
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+}
+
 .modal-buttons {
   display: flex;
   gap: 12px;

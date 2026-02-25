@@ -138,6 +138,10 @@
   <div class="modal-overlay" id="confirmModal">
     <div class="modal">
       <p data-i18n="confirm_delete_all">Êtes-vous sûr de vouloir supprimer toutes les tâches ?</p>
+      <div id="deleteFilterSection" style="display:none">
+        <p class="delete-filter-label" data-i18n="delete_filter_label">Supprimer pour :</p>
+        <div id="deleteFilterOptions" class="delete-filter-options"></div>
+      </div>
       <div class="modal-buttons">
         <button class="modal-btn modal-btn-cancel" id="confirmNo" data-i18n="btn_cancel">Annuler</button>
         <button class="modal-btn modal-btn-confirm" id="confirmYes" data-i18n="btn_delete">Supprimer</button>

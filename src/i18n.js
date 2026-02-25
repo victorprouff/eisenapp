@@ -45,6 +45,7 @@ const translations = {
 
     // Modale suppression
     confirm_delete_all: 'Êtes-vous sûr de vouloir supprimer toutes les tâches ?',
+    delete_filter_label: 'Supprimer pour :',
     btn_cancel: 'Annuler',
     btn_delete: 'Supprimer',
 
@@ -151,6 +152,7 @@ const translations = {
 
     // Modale suppression
     confirm_delete_all: 'Are you sure you want to delete all tasks?',
+    delete_filter_label: 'Delete for:',
     btn_cancel: 'Cancel',
     btn_delete: 'Delete',
 
@@ -257,6 +259,7 @@ const translations = {
 
     // Modale suppression
     confirm_delete_all: '¿Seguro que quieres eliminar todas las tareas?',
+    delete_filter_label: 'Eliminar para:',
     btn_cancel: 'Cancelar',
     btn_delete: 'Eliminar',
 
@@ -363,6 +366,7 @@ const translations = {
 
     // Modale suppression
     confirm_delete_all: 'Alle Aufgaben wirklich löschen?',
+    delete_filter_label: 'Löschen für:',
     btn_cancel: 'Abbrechen',
     btn_delete: 'Löschen',
 

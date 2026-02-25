@@ -446,11 +446,70 @@ function toggleTaskComplete(id) {
 function removeAllTasks() {
   confirmPendingDelete();
   const modal = document.getElementById('confirmModal');
+  const filterSection = document.getElementById('deleteFilterSection');
+  const filterOptions = document.getElementById('deleteFilterOptions');
+
+  filterOptions.innerHTML = '';
+
+  if (flagsEnabled && flagList.length > 0) {
+    filterSection.style.display = '';
+
+    // Présélection : flags actifs si filtre en cours, sinon tous
+    const defaultSelected = activeFilter.size > 0 ? activeFilter : new Set([...flagList, '__none__']);
+
+    flagList.forEach(flag => {
+      if (!tasks.some(t => t.flag === flag)) return;
+      const row = document.createElement('label');
+      row.className = 'delete-filter-row';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = flag;
+      cb.checked = defaultSelected.has(flag);
+      const dot = document.createElement('span');
+      dot.className = 'flag-option-dot';
+      dot.style.background = flagColors[flag] || '#888';
+      const label = document.createElement('span');
+      label.textContent = flag;
+      row.append(cb, dot, label);
+      filterOptions.appendChild(row);
+    });
+
+    if (tasks.some(t => !t.flag)) {
+      const row = document.createElement('label');
+      row.className = 'delete-filter-row';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = '__none__';
+      cb.checked = defaultSelected.has('__none__');
+      const label = document.createElement('span');
+      label.textContent = t('flag_none');
+      row.append(cb, label);
+      filterOptions.appendChild(row);
+    }
+  } else {
+    filterSection.style.display = 'none';
+  }
+
   modal.classList.add('visible');
 
   document.getElementById('confirmYes').onclick = () => {
     modal.classList.remove('visible');
-    tasks = [];
+    if (flagsEnabled && flagList.length > 0) {
+      const checkedFlags = new Set();
+      let deleteNone = false;
+      filterOptions.querySelectorAll('input[type=checkbox]').forEach(cb => {
+        if (cb.checked) {
+          if (cb.value === '__none__') deleteNone = true;
+          else checkedFlags.add(cb.value);
+        }
+      });
+      tasks = tasks.filter(t => {
+        if (!t.flag) return !deleteNone;
+        return !checkedFlags.has(t.flag);
+      });
+    } else {
+      tasks = [];
+    }
     saveTasks();
     render();
   };
