@@ -316,7 +316,7 @@ function generateExportContent() {
   return sections
     .filter(s => s.tasks.length > 0)
     .map(s => {
-      const lines = s.tasks.map(t => `- [${t.completed ? 'x' : ' '}] ${t.text}`);
+      const lines = s.tasks.map(t => `- [${t.completed ? 'x' : ' '}] ${t.flag ? `[${t.flag}] ` : ''}${t.text}`);
       return `## ${s.label}\n\n${lines.join('\n')}`;
     })
     .join('\n\n');
