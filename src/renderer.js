@@ -86,6 +86,16 @@ function setupEventListeners() {
   // Supprimer toutes les tâches
   document.getElementById('clearTasks').addEventListener('click', removeAllTasks);
 
+  // Feedback
+  document.getElementById('feedbackBtn').addEventListener('click', openFeedbackModal);
+  document.getElementById('feedbackClose').addEventListener('click', () => document.getElementById('feedbackModal').classList.remove('visible'));
+  document.getElementById('feedbackDone').addEventListener('click', () => document.getElementById('feedbackModal').classList.remove('visible'));
+  document.getElementById('feedbackFormEl').addEventListener('submit', submitFeedback);
+  document.getElementById('feedbackIssuesLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    window.__TAURI__.opener.openUrl('https://github.com/victorprouff/eisenapp/issues');
+  });
+
   // Annuler la dernière suppression
   document.getElementById('undoBtn').addEventListener('click', () => {
     if (!undoPending) return;
@@ -516,6 +526,39 @@ function removeAllTasks() {
   document.getElementById('confirmNo').onclick = () => {
     modal.classList.remove('visible');
   };
+}
+
+function openFeedbackModal() {
+  document.getElementById('feedbackFormView').style.display = '';
+  document.getElementById('feedbackSentView').style.display = 'none';
+  document.getElementById('feedbackError').style.display = 'none';
+  document.getElementById('feedbackFormEl').reset();
+  document.getElementById('feedbackSubmit').disabled = false;
+  document.getElementById('feedbackModal').classList.add('visible');
+}
+
+async function submitFeedback(e) {
+  e.preventDefault();
+  const form = e.target;
+  const submitBtn = document.getElementById('feedbackSubmit');
+  const errorEl = document.getElementById('feedbackError');
+  submitBtn.disabled = true;
+  errorEl.style.display = 'none';
+  try {
+    const data = Object.fromEntries(new FormData(form).entries());
+    await window.__TAURI__.core.invoke('submit_feedback', {
+      type: data.type,
+      titre: data.titre,
+      description: data.description,
+      email: data.email ?? '',
+    });
+    document.getElementById('feedbackFormView').style.display = 'none';
+    document.getElementById('feedbackSentView').style.display = '';
+  } catch {
+    errorEl.textContent = '';
+    errorEl.style.display = '';
+    submitBtn.disabled = false;
+  }
 }
 
 function createTaskElement(task, isDraggable = true) {

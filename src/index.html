@@ -34,6 +34,13 @@
         <line x1="9.25" y1="6.5" x2="9.25" y2="10.5"/>
       </svg>
     </button>
+    <button class="feedback-btn" id="feedbackBtn" data-i18n-title="btn_feedback_title" title="Signaler un bug / suggérer">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 1H2C1.4 1 1 1.4 1 2v8c0 .6.4 1 1 1h3l2 3 2-3h5c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1z"/>
+        <line x1="8" y1="4.5" x2="8" y2="7.5"/>
+        <circle cx="8" cy="9.5" r=".6" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
     <button class="theme-toggle" id="themeToggle" data-i18n-title="btn_theme_title" title="Changer de thème"></button>
   </div>
   <div class="container">
@@ -145,6 +152,50 @@
       <div class="modal-buttons">
         <button class="modal-btn modal-btn-cancel" id="confirmNo" data-i18n="btn_cancel">Annuler</button>
         <button class="modal-btn modal-btn-confirm" id="confirmYes" data-i18n="btn_delete">Supprimer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="feedbackModal">
+    <div class="modal modal-feedback">
+      <div id="feedbackFormView">
+        <h3 style="margin-bottom:16px;font-size:16px;" data-i18n="feedback_title">Signaler un bug ou suggérer</h3>
+        <form id="feedbackFormEl" novalidate>
+          <div class="feedback-field">
+            <label class="feedback-label" data-i18n="feedback_type_label">Type</label>
+            <select class="feedback-select" name="type" required>
+              <option value="Bug" data-i18n="feedback_type_bug">Bug</option>
+              <option value="Nouvelle fonctionnalité" data-i18n="feedback_type_feature">Nouvelle fonctionnalité</option>
+              <option value="Question" data-i18n="feedback_type_question">Question</option>
+            </select>
+          </div>
+          <div class="feedback-field">
+            <label class="feedback-label" data-i18n="feedback_title_label">Titre</label>
+            <input class="feedback-input" name="titre" type="text" data-i18n-placeholder="feedback_title_placeholder" placeholder="Résumé de votre demande" required>
+          </div>
+          <div class="feedback-field">
+            <label class="feedback-label" data-i18n="feedback_desc_label">Description</label>
+            <textarea class="feedback-textarea" name="description" data-i18n-placeholder="feedback_desc_placeholder" placeholder="Décrivez votre problème ou suggestion…" required></textarea>
+          </div>
+          <div class="feedback-field">
+            <label class="feedback-label" data-i18n="feedback_email_label">Email <span class="feedback-optional" data-i18n="feedback_optional">(optionnel)</span></label>
+            <input class="feedback-input" name="email" type="email" placeholder="votre@email.com">
+          </div>
+          <p id="feedbackError" class="feedback-error" style="display:none" data-i18n="feedback_error">Erreur lors de l'envoi. Réessayez.</p>
+          <div class="modal-buttons" style="margin-top:20px">
+            <button type="button" class="modal-btn modal-btn-cancel" id="feedbackClose" data-i18n="btn_cancel">Annuler</button>
+            <button type="submit" class="modal-btn modal-btn-confirm" id="feedbackSubmit" data-i18n="btn_send">Envoyer</button>
+          </div>
+        </form>
+      </div>
+      <div id="feedbackSentView" style="display:none;text-align:center">
+        <div class="feedback-sent-icon">✓</div>
+        <h3 style="margin-bottom:8px;font-size:16px;" data-i18n="feedback_sent_title">Message envoyé !</h3>
+        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:20px;" data-i18n="feedback_sent_body">Merci pour votre retour.</p>
+        <a class="feedback-issues-link" id="feedbackIssuesLink" href="#" data-i18n="feedback_track_link">Suivre vos demandes sur GitHub →</a>
+        <div class="modal-buttons" style="margin-top:20px">
+          <button class="modal-btn modal-btn-cancel" id="feedbackDone" data-i18n="btn_close">Fermer</button>
+        </div>
       </div>
     </div>
   </div>

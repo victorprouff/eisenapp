@@ -813,6 +813,111 @@ body.dark-theme .theme-toggle:hover {
   max-width: 520px;
 }
 
+/* Bouton feedback */
+.feedback-btn {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  top: 0;
+  left: 48px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: var(--text-secondary);
+}
+
+.feedback-btn:hover {
+  background: var(--task-hover);
+}
+
+/* Modale feedback */
+.modal-feedback {
+  max-width: 460px;
+  width: 90%;
+}
+
+.feedback-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.feedback-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.feedback-optional {
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.feedback-input,
+.feedback-select,
+.feedback-textarea {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  padding: 8px 10px;
+  height: 38px;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.15s;
+  outline: none;
+}
+
+.feedback-input:focus,
+.feedback-select:focus,
+.feedback-textarea:focus {
+  border-color: var(--accent);
+}
+
+.feedback-textarea {
+  resize: vertical;
+  height: auto;
+  min-height: 90px;
+}
+
+.feedback-error {
+  font-size: 13px;
+  color: #dc2626;
+  text-align: center;
+  margin-top: -6px;
+}
+
+.feedback-sent-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #16a34a;
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.feedback-issues-link {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.feedback-issues-link:hover {
+  text-decoration: underline;
+}
+
 /* Bouton neutre (gris → bleu au survol) */
 .modal-btn-neutral {
   background: var(--task-bg);

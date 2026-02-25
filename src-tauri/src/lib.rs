@@ -113,6 +113,29 @@ fn save_tasks(app: tauri::AppHandle, tasks: Vec<Task>) -> Result<(), String> {
 }
 
 #[tauri::command]
+async fn submit_feedback(
+    type_: String,
+    titre: String,
+    description: String,
+    email: String,
+) -> Result<(), String> {
+    let form = reqwest::multipart::Form::new()
+        .text("field-0", type_)
+        .text("field-1", titre)
+        .text("field-2", description)
+        .text("field-3", email);
+
+    reqwest::Client::new()
+        .post("https://n8n.victorprouff.fr/form/f26b6a75-0a62-4bd5-8732-47bd1b7e07b6")
+        .multipart(form)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
 async fn save_markdown(content: String) -> Result<bool, String> {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     {
@@ -228,6 +251,7 @@ async fn install_update(
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(PendingUpdate(Mutex::new(None)))
         .setup(|app| {
@@ -259,7 +283,8 @@ pub fn run() {
             install_update,
             save_markdown,
             load_settings,
-            save_settings
+            save_settings,
+            submit_feedback
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
