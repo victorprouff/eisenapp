@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="titlebar">
-    <span class="titlebar-text">EisenApp</span>
+    <!-- <span class="titlebar-text">EisenApp</span> -->
     <div class="update-banner" id="updateBanner" style="display:none" data-i18n="update_banner">Mise à jour disponible</div>
     <div class="filter-bar">
       <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Tous</button>
@@ -110,32 +110,38 @@
     </main>
 
     <!-- Colonne droite : Liste priorisée -->
-    <aside class="sidebar right-sidebar">
-      <div class="sidebar-header">
-        <h2 data-i18n="priority_list">Liste priorisée</h2>
-      </div>
-      <div class="prioritized-list">
-        <div class="priority-section" data-priority="1">
-          <h3 class="priority-header q1-bg" data-i18n="priority_q1">Faire maintenant</h3>
-          <div class="priority-tasks" id="priority-1"></div>
+    <div class="right-panel-wrapper">
+      <button class="right-panel-tab" id="rightPanelTab" title="">
+        <span class="right-panel-tab-arrow">‹</span>
+        <span class="right-panel-tab-label" data-i18n="priority_list">Liste priorisée</span>
+      </button>
+      <aside class="sidebar right-sidebar">
+        <div class="sidebar-header">
+          <h2 data-i18n="priority_list">Liste priorisée</h2>
         </div>
-        <div class="priority-section" data-priority="2">
-          <h3 class="priority-header q2-bg" data-i18n="priority_q2">Planifier</h3>
-          <div class="priority-tasks" id="priority-2"></div>
+        <div class="prioritized-list">
+          <div class="priority-section" data-priority="1">
+            <h3 class="priority-header q1-bg" data-i18n="priority_q1">Faire maintenant</h3>
+            <div class="priority-tasks" id="priority-1"></div>
+          </div>
+          <div class="priority-section" data-priority="2">
+            <h3 class="priority-header q2-bg" data-i18n="priority_q2">Planifier</h3>
+            <div class="priority-tasks" id="priority-2"></div>
+          </div>
+          <div class="priority-section" data-priority="3">
+            <h3 class="priority-header q3-bg" data-i18n="priority_q3">Déléguer</h3>
+            <div class="priority-tasks" id="priority-3"></div>
+          </div>
+          <div class="priority-section" data-priority="4">
+            <h3 class="priority-header q4-bg" data-i18n="priority_q4">À piocher</h3>
+            <div class="priority-tasks" id="priority-4"></div>
+          </div>
         </div>
-        <div class="priority-section" data-priority="3">
-          <h3 class="priority-header q3-bg" data-i18n="priority_q3">Déléguer</h3>
-          <div class="priority-tasks" id="priority-3"></div>
+        <div class="export-section">
+          <button id="exportBtn" data-i18n="btn_export">Exporter</button>
         </div>
-        <div class="priority-section" data-priority="4">
-          <h3 class="priority-header q4-bg" data-i18n="priority_q4">À piocher</h3>
-          <div class="priority-tasks" id="priority-4"></div>
-        </div>
-      </div>
-      <div class="export-section">
-        <button id="exportBtn" data-i18n="btn_export">Exporter</button>
-      </div>
-    </aside>
+      </aside>
+    </div>
   </div>
 
   <div class="file-drop-overlay" id="fileDropOverlay">
