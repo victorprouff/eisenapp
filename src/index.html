@@ -46,27 +46,33 @@
   <div class="right-panel-backdrop" id="rightPanelBackdrop"></div>
   <div class="container">
     <!-- Colonne gauche : Ajout de tâches -->
-    <aside class="sidebar left-sidebar">
-      <div class="sidebar-header">
-        <h2 data-i18n="new_task">Nouvelle tâche</h2>
-      </div>
-      <div class="add-task-section">
-        <input
-          type="text"
-          id="taskInput"
-          placeholder="Entrez une tâche..."
-          data-i18n-placeholder="task_placeholder"
-          autocomplete="off"
-        >
-        <button id="addTaskBtn" data-i18n="btn_add">Ajouter</button>
-        <input type="file" id="importFileInput" accept=".txt,.md" style="display:none">
-        <button id="importBtn" data-i18n="btn_import">Importer une liste</button>
-      </div>
-      <div class="unassigned-tasks" data-drop-zone="unassigned">
-        <h3 data-i18n="unassigned_tasks">Tâches non assignées</h3>
-        <div id="taskList" class="task-list"></div>
-      </div>
-    </aside>
+    <div class="left-panel-wrapper">
+      <aside class="sidebar left-sidebar">
+        <div class="sidebar-header">
+          <h2 data-i18n="new_task">Nouvelle tâche</h2>
+        </div>
+        <div class="add-task-section">
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="Entrez une tâche..."
+            data-i18n-placeholder="task_placeholder"
+            autocomplete="off"
+          >
+          <button id="addTaskBtn" data-i18n="btn_add">Ajouter</button>
+          <input type="file" id="importFileInput" accept=".txt,.md" style="display:none">
+          <button id="importBtn" data-i18n="btn_import">Importer une liste</button>
+        </div>
+        <div class="unassigned-tasks" data-drop-zone="unassigned">
+          <h3 data-i18n="unassigned_tasks">Tâches non assignées</h3>
+          <div id="taskList" class="task-list"></div>
+        </div>
+      </aside>
+      <button class="left-panel-tab" id="leftPanelTab" title="">
+        <span class="left-panel-tab-arrow">›</span>
+        <span class="left-panel-tab-label" data-i18n="new_task">Nouvelle tâche</span>
+      </button>
+    </div>
 
     <!-- Centre : Matrice Eisenhower -->
     <main class="matrix-container">

@@ -83,6 +83,16 @@ function setupEventListeners() {
   unassignedZone.addEventListener('drop', handleDrop);
   unassignedZone.addEventListener('dragleave', handleDragLeave);
 
+  // Panneau gauche rétractable
+  const leftPanelWrapper = document.querySelector('.left-panel-wrapper');
+  if (localStorage.getItem('left-panel-collapsed') === 'true') {
+    leftPanelWrapper.classList.add('collapsed');
+  }
+  document.getElementById('leftPanelTab').addEventListener('click', () => {
+    leftPanelWrapper.classList.toggle('collapsed');
+    localStorage.setItem('left-panel-collapsed', leftPanelWrapper.classList.contains('collapsed'));
+  });
+
   // Panneau droit rétractable
   const rightPanelWrapper = document.querySelector('.right-panel-wrapper');
   const rightPanelBackdrop = document.getElementById('rightPanelBackdrop');

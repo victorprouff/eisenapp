@@ -157,6 +157,77 @@ body.dark-theme {
   display: block;
 }
 
+/* Panneau gauche rétractable (dans le flux) */
+.left-panel-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+.left-sidebar {
+  transition: width 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.left-panel-wrapper.collapsed .left-sidebar {
+  width: 0 !important;
+  opacity: 0;
+}
+
+.left-panel-tab {
+  width: 20px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  box-shadow: 2px 0 6px var(--shadow);
+  transition: background 0.2s, border-radius 0.3s;
+  padding: 0;
+}
+
+.left-panel-tab:hover {
+  background: var(--task-hover);
+  color: var(--text-primary);
+}
+
+.left-panel-tab-arrow {
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.3s;
+  display: block;
+}
+
+.left-panel-tab-label {
+  writing-mode: vertical-rl;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.left-panel-wrapper.collapsed .left-panel-tab {
+  border-radius: 10px;
+}
+
+.left-panel-wrapper.collapsed .left-panel-tab-arrow {
+  transform: scaleX(-1);
+}
+
+.left-panel-wrapper.collapsed .left-panel-tab-label {
+  opacity: 1;
+}
+
 /* Panneau droit rétractable */
 .right-panel-wrapper {
   position: fixed;
@@ -249,6 +320,10 @@ body.dark-theme {
 .right-sidebar {
   width: 560px;
   border-radius: 0;
+}
+
+.left-sidebar {
+  border-radius: 12px 0 0 12px;
 }
 
 .sidebar-header {
