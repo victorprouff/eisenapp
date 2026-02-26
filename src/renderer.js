@@ -563,11 +563,15 @@ async function submitFeedback(e) {
   errorEl.style.display = 'none';
   try {
     const data = Object.fromEntries(new FormData(form).entries());
+    const feedbackUrl = currentLang === 'fr'
+      ? 'https://n8n.victorprouff.fr/form/f26b6a75-0a62-4bd5-8732-47bd1b7e07b6'
+      : 'https://n8n.victorprouff.fr/form/d495b3e5-f380-4aa7-ab5d-17da94668a41';
     await window.__TAURI__.core.invoke('submit_feedback', {
       type: data.type,
       titre: data.titre,
       description: data.description,
       email: data.email ?? '',
+      url: feedbackUrl,
     });
     document.getElementById('feedbackFormView').style.display = 'none';
     document.getElementById('feedbackSentView').style.display = '';

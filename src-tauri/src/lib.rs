@@ -118,6 +118,7 @@ async fn submit_feedback(
     titre: String,
     description: String,
     email: String,
+    url: String,
 ) -> Result<(), String> {
     let form = reqwest::multipart::Form::new()
         .text("field-0", type_)
@@ -126,7 +127,7 @@ async fn submit_feedback(
         .text("field-3", email);
 
     reqwest::Client::new()
-        .post("https://n8n.victorprouff.fr/form/f26b6a75-0a62-4bd5-8732-47bd1b7e07b6")
+        .post(url)
         .multipart(form)
         .send()
         .await
