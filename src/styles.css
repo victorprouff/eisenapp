@@ -282,10 +282,6 @@ body.dark-theme {
   white-space: nowrap;
 }
 
-.right-panel-wrapper.collapsed .right-panel-tab {
-  border-radius: 10px;
-}
-
 .right-panel-wrapper.collapsed .right-panel-tab-arrow {
   transform: scaleX(-1);
 }
@@ -307,7 +303,7 @@ body.dark-theme {
 
 /* Colonnes latérales */
 .sidebar {
-  width: 280px;
+  width: 380px;
   background: var(--bg-secondary);
   border-radius: 12px;
   box-shadow: 0 2px 8px var(--shadow);

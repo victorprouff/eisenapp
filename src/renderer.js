@@ -85,12 +85,16 @@ function setupEventListeners() {
 
   // Panneau gauche rétractable
   const leftPanelWrapper = document.querySelector('.left-panel-wrapper');
-  if (localStorage.getItem('left-panel-collapsed') === 'true') {
-    leftPanelWrapper.classList.add('collapsed');
+
+  function setLeftPanel(collapsed) {
+    leftPanelWrapper.classList.toggle('collapsed', collapsed);
+    localStorage.setItem('left-panel-collapsed', collapsed);
   }
+
+  setLeftPanel(localStorage.getItem('left-panel-collapsed') === 'true');
+
   document.getElementById('leftPanelTab').addEventListener('click', () => {
-    leftPanelWrapper.classList.toggle('collapsed');
-    localStorage.setItem('left-panel-collapsed', leftPanelWrapper.classList.contains('collapsed'));
+    setLeftPanel(!leftPanelWrapper.classList.contains('collapsed'));
   });
 
   // Panneau droit rétractable
