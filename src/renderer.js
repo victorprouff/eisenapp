@@ -699,8 +699,11 @@ function createTaskElement(task, isDraggable = true) {
     taskEl.appendChild(arrows);
   }
 
-  taskEl.appendChild(flagBtn);
-  taskEl.appendChild(deleteBtn);
+  const taskActions = document.createElement('div');
+  taskActions.className = 'task-actions';
+  taskActions.appendChild(flagBtn);
+  taskActions.appendChild(deleteBtn);
+  taskEl.appendChild(taskActions);
 
   return taskEl;
 }

@@ -401,14 +401,22 @@ body.dark-theme {
   color: var(--text-tertiary);
   cursor: pointer;
   font-size: 16px;
-  padding: 4px 8px;
+  padding: 2px 6px;
   border-radius: 4px;
   transition: all 0.2s;
+  line-height: 1;
 }
 
 .task-delete:hover {
   background: var(--border-color);
   color: var(--q1-color);
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 /* Badge flag */
