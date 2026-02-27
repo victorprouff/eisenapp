@@ -24,6 +24,12 @@ let newFlagColor = '#16a34a';
 let activeFilter = new Set(); // ensemble vide = "Tous"
 let showCompleted = true;
 
+function setLeftPanel(collapsed) {
+  const wrapper = document.querySelector('.left-panel-wrapper');
+  wrapper.classList.toggle('collapsed', collapsed);
+  localStorage.setItem('left-panel-collapsed', collapsed);
+}
+
 // Dropdown flag
 let _dropdownTask = null;
 let _dropdownBtn = null;
@@ -84,17 +90,10 @@ function setupEventListeners() {
   unassignedZone.addEventListener('dragleave', handleDragLeave);
 
   // Panneau gauche rétractable
-  const leftPanelWrapper = document.querySelector('.left-panel-wrapper');
-
-  function setLeftPanel(collapsed) {
-    leftPanelWrapper.classList.toggle('collapsed', collapsed);
-    localStorage.setItem('left-panel-collapsed', collapsed);
-  }
-
   setLeftPanel(localStorage.getItem('left-panel-collapsed') === 'true');
 
   document.getElementById('leftPanelTab').addEventListener('click', () => {
-    setLeftPanel(!leftPanelWrapper.classList.contains('collapsed'));
+    setLeftPanel(!document.querySelector('.left-panel-wrapper').classList.contains('collapsed'));
   });
 
   // Panneau droit rétractable
@@ -397,6 +396,7 @@ function importTaskLines(parsedLines) {
       createdAt: new Date().toISOString()
     });
   });
+  setLeftPanel(false);
   saveTasks();
   render();
 }
